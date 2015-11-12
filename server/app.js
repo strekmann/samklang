@@ -4,6 +4,7 @@ import fs from "fs";
 import libby from "libby";
 import moment from "moment";
 import path from "path";
+import consolidate from "consolidate";
 
 import db from "./lib/db";
 import log from "./lib/logger";
@@ -27,7 +28,7 @@ if (app.settings.env === "development" || app.settings.env === "production"){
     app.use(expressBunyan.errorLogger(bunyanOpts));
 }
 
-app.passport = passport(app);
+app.passport = passport;
 app.use(app.passport.initialize());
 app.use(app.passport.session());
 
@@ -39,19 +40,23 @@ app.use(function(req, res, next){
     next();
 });
 
+app.engine('html', consolidate.lodash);
+app.set('view engine', 'html');
+app.set('views', path.join(__dirname, 'views'));
+
 // passport routes here bitte
 
 app.use("/", indexRoutes);
 
 // static files for development
-app.use("/", express.static(path.join(__dirname, "..", "public"));
+app.use("/", express.static(path.join(__dirname, "..", "public")));
 
 app.use(function(err, req, res, next){
     log.error(err);
 
     res.format({
         html: function(){
-            res.status(500).renderHTML("500", {
+            res.status(500).render("500", {
                 error: err.message
             });
         },
@@ -77,3 +82,5 @@ app.use(function(req, res, next){
         }
     });
 });
+
+export default app;
