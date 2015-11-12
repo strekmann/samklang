@@ -5,14 +5,14 @@ import ReactDOMServer from "react-dom/server";
 import alt from "../../react/alt";
 
 
-export ensureAuthenticated = function(req, res, next) {
+export function ensureAuthenticated(req, res, next) {
     if (req.isAuthenticated()) { return next(); }
 
     req.session.returnTo = req.originalUrl || req.url;
     res.redirect("/_/login");
 };
 
-export ensureAdmin = function(req, res, next){
+export function ensureAdmin(req, res, next){
     if (!req.isAuthenticated()){
         req.session.returnTo = req.originalUrl || req.url;
         return res.redirect("/_/login");
@@ -25,7 +25,7 @@ export ensureAdmin = function(req, res, next){
     res.sendStatus(401);
 };
 
-export addRenderReact = function (req, res, next) {
+export function addRenderReact(req, res, next) {
     res.renderReact = function (page, data) {
         moment.locale(req.lang);
 

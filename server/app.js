@@ -8,7 +8,7 @@ import consolidate from "consolidate";
 
 import db from "./lib/db";
 import log from "./lib/logger";
-import middleware from "./lib/middleware";
+import {addRenderReact} from "./lib/middleware";
 import passport from "./lib/passport";
 import pkg from "../package";
 import settings from "./settings";
@@ -32,8 +32,7 @@ app.passport = passport;
 app.use(app.passport.initialize());
 app.use(app.passport.session());
 
-app.use(middleware.addRenderReact);
-app.use(middleware.addRenderHTML);
+app.use(addRenderReact);
 
 app.use(function(req, res, next){
     moment.locale(res.locals.locale);

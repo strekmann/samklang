@@ -22,24 +22,26 @@ passport.deserializeUser(function(user_id, done) {
     });
 });
 
-passport.passportLocal = new LocalStrategy(function(email, password, done){
-    email = email.toLowerCase();
+passport.passportLocal = new LocalStrategy(
+    function(email, password, done){
+        email = email.toLowerCase();
 
-    User.findOne({email: email}, function(err, user) {
-        if (err) { return done(err); }
-        if (!user) { return done(null, false, { message: 'Unknown user ' + email }); }
-
-        user.authenticate(password, function(err, ok) {
+        User.findOne({email: email}, function(err, user) {
             if (err) { return done(err); }
-            if (ok) {
-                return done(null, user);
-            }
-            else {
-                return done(null, false, { message: 'Invalid password' });
-            }
+            if (!user) { return done(null, false, { message: 'Unknown user ' + email }); }
+
+            user.authenticate(password, function(err, ok) {
+                if (err) { return done(err); }
+                if (ok) {
+                    return done(null, user);
+                }
+                else {
+                    return done(null, false, { message: 'Invalid password' });
+                }
+            });
         });
-    });
-});
+    }
+);
 
 passport.use(passport.passportLocal);
 export default passport;
