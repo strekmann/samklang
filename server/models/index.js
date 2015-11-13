@@ -35,4 +35,4 @@ UserSchema.methods.authenticate = function(candidate, next){
 
 var User = mongoose.model('User', UserSchema);
 
-export User;
+export {User};

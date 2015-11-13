@@ -12,7 +12,7 @@ if (settings.bunyan){
 
 logger = bunyan.createLogger(opts);
 
-var consoleLog = _logger.child({console: true});
+var consoleLog = logger.child({console: true});
 console.log   = function(){ consoleLog.debug(null, util.format.apply(this, arguments)); };
 console.debug = function(){ consoleLog.debug(null, util.format.apply(this, arguments)); };
 console.info  = function(){ consoleLog.info (null, util.format.apply(this, arguments)); };
@@ -21,7 +21,7 @@ console.error = function(){ consoleLog.error(null, util.format.apply(this, argum
 
 export default logger;
 
-export defaultSerializers = {
+var defaultSerializers = {
     res: function(res){
         if (!_.isObject(res)) { return res; }
         return {
@@ -42,3 +42,5 @@ export defaultSerializers = {
         };
     }
 };
+
+export {defaultSerializers};
