@@ -2,3 +2,4 @@
 /server/settings.js
 /public
 /dist
+/setup/mongo
