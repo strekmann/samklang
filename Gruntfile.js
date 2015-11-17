@@ -76,7 +76,7 @@ module.exports = function(grunt) {
             },
             server: {
                 files: ['Gruntfile.js', 'cluster.js', 'server/**/*.js', 'test/**/*.js'],
-                tasks: ['jshint:server']
+                tasks: ['webpack:build-dev']
             },
             scss: {
                 files: ['client/scss/**/*.scss'],
