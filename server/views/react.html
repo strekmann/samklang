@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="<%- lang %>" dir="<%- lang_dir %>">
+    <head>
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <meta name="author" content="Strekmann AS"/>
+
+        <link href="/_/css/site.css?<%- stamp %>" rel="stylesheet"/>
+    </head>
+    <body>
+        <section id="main"><%= html %></section>
+
+        <script src="/_/js/common.js?<%- stamp %>"></script>
+        <script src="/_/js/<%- lang %>/messages.js?<%- stamp %>"></script>
+        <script src="/_/js/<%- page %>.js?<%- stamp %>"></script>
+    </body>
+</html>

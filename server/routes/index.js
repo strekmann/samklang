@@ -4,7 +4,8 @@ import express from "express";
 var router = express.Router();
 
 router.get("/", function(req, res, next){
-    res.send('I R Samklang!');
+    var data = {};
+    res.renderReact('index', data);
 });
 
 export default router;

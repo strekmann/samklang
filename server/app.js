@@ -36,6 +36,10 @@ app.use(addRenderReact);
 
 app.use(function(req, res, next){
     moment.locale(res.locals.locale);
+    res.locals.stamp = app.stamp;
+
+    res.locals.html = "";
+    res.locals.page = "index";
     next();
 });
 
