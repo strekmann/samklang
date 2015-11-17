@@ -52,7 +52,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.use("/", indexRoutes);
 
 // static files for development
-app.use("/", express.static(path.join(__dirname, "..", "public")));
+app.use("/_/", express.static(path.join(__dirname, "..", "public")));
 
 app.use(function(err, req, res, next){
     log.error(err);

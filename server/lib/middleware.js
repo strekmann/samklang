@@ -29,7 +29,7 @@ var addRenderReact = function (req, res, next) {
     res.renderReact = function (page, data) {
         moment.locale(req.lang);
 
-        var element = require("../../react/pages/" + page);
+        var element = require("../../react/pages/" + page).default;
 
         alt.bootstrap(JSON.stringify(data));
         var html = Iso.render(ReactDOMServer.renderToString(React.createElement(element, {lang: req.lang})), alt.flush(), {react: true});
