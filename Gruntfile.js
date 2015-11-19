@@ -67,7 +67,7 @@ module.exports = function(grunt) {
             },
             server: {
                 files: ["Gruntfile.js", "cluster.js", "server/**/*.js", "test/**/*.js"],
-                tasks: ["webpack:build-dev"]
+                tasks: ["eslint"]
             },
             scss: {
                 files: ["scss/*.scss"],
@@ -114,6 +114,9 @@ module.exports = function(grunt) {
                     localeDir: "server/locale"
                 }
             }
+        },
+        eslint: {
+            target: ["**/*.js"]
         }
     });
 
@@ -122,6 +125,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks("grunt-contrib-watch");
     grunt.loadNpmTasks("grunt-i18n-abide");
     grunt.loadNpmTasks("grunt-webpack");
+    grunt.loadNpmTasks("grunt-eslint");
 
     grunt.registerTask("default", ["sass", "copy", "abideCompile", "webpack:build-dev"]);
     grunt.registerTask("prod", ["sass", "copy", "abideCompile", "webpack:build"]);
