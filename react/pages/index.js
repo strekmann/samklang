@@ -47,6 +47,16 @@ var IndexPage = React.createClass({
                         </form>
                     </Col>
                 </Row>
+            <div>
+                <form onSubmit={this.onRegister}>
+                    <button type="submit">Send</button>
+                </form>
+                <h1>Testing testing</h1>
+                <p var=""
+                    per="">Ost
+                    <b>test</b>
+                </p>
+            </div>
             </Grid>
         );
     }
