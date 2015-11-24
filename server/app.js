@@ -1,6 +1,5 @@
 import express from "express";
 import expressBunyan from "express-bunyan-logger";
-import fs from "fs";
 import libby from "libby";
 import moment from "moment";
 import path from "path";
@@ -14,6 +13,7 @@ import pkg from "../package";
 import settings from "./settings";
 
 import indexRoutes from "./routes";
+import authRoutes from "./routes/auth";
 
 settings.sessionName = settings.sessionName || pkg.name || "connect.sid";
 
@@ -43,9 +43,9 @@ app.use(function(req, res, next){
     next();
 });
 
-app.engine('html', consolidate.lodash);
-app.set('view engine', 'html');
-app.set('views', path.join(__dirname, 'views'));
+app.engine("html", consolidate.lodash);
+app.set("view engine", "html");
+app.set("views", path.join(__dirname, "views"));
 
 // passport routes here bitte
 app.post("/login", passport.authenticate("local"), (req, res) => {
@@ -53,6 +53,7 @@ app.post("/login", passport.authenticate("local"), (req, res) => {
 });
 
 app.use("/", indexRoutes);
+app.use("/_/auth", authRoutes);
 
 // static files for development
 app.use("/_/", express.static(path.join(__dirname, "..", "public")));
