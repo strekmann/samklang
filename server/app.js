@@ -48,6 +48,9 @@ app.set('view engine', 'html');
 app.set('views', path.join(__dirname, 'views'));
 
 // passport routes here bitte
+app.post("/login", passport.authenticate("local"), (req, res) => {
+    res.redirect("/");
+});
 
 app.use("/", indexRoutes);
 
