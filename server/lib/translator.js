@@ -35,7 +35,7 @@ export default (lang) => {
 
         return (word) => {
             var args = arguments;
-            if (args.length === 0) { return ""; }
+            if (args.length === 0) { return ''; }
             args[0] = translations[word] && translations[word][1] || word;
             return format.apply(this, args);
         };

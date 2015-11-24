@@ -1,8 +1,8 @@
-import alt from "../alt";
-import Immutable from "immutable";
-import immutableStore from "alt/utils/ImmutableUtil";
+import alt from '../alt';
+import Immutable from 'immutable';
+import immutableStore from 'alt/utils/ImmutableUtil';
 
-import AuthActions from "../actions/auth";
+import AuthActions from '../actions/auth';
 
 class AuthStore {
     constructor() {
@@ -18,20 +18,20 @@ class AuthStore {
     }
 
     onRegistered() {
-        this.setState(this.state.set("registered", true));
+        this.setState(this.state.set('registered', true));
     }
 
     onError(data) {
-        this.setState(this.state.set("error", data.error));
+        this.setState(this.state.set('error', data.error));
     }
 
     static getError() {
-        return this.getState().get("error");
+        return this.getState().get('error');
     }
 
     static getRegistered() {
-        return this.getState().get("registered");
+        return this.getState().get('registered');
     }
 }
 
-export default alt.createStore(immutableStore(AuthStore), "AuthStore");
+export default alt.createStore(immutableStore(AuthStore), 'AuthStore');

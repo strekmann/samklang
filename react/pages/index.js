@@ -1,14 +1,14 @@
-import React from "react";
-import translator from "../../server/lib/translator";
-import Immutable from "immutable";
-import FluxyMixin from "alt/mixins/FluxyMixin";
-import {Grid, Row, Col, Input, Button, Alert} from "react-bootstrap";
+import React from 'react';
+import translator from '../../server/lib/translator';
+import Immutable from 'immutable';
+import FluxyMixin from 'alt/mixins/FluxyMixin';
+import {Grid, Row, Col, Input, Button, Alert} from 'react-bootstrap';
 
-import AuthActions from "../actions/auth";
-import AuthStore from "../stores/auth";
+import AuthActions from '../actions/auth';
+import AuthStore from '../stores/auth';
 
 var IndexPage = React.createClass({
-    displayName: "IndexPage",
+    displayName: 'IndexPage',
 
     propTypes: {
         lang: React.PropTypes.string,
@@ -38,13 +38,13 @@ var IndexPage = React.createClass({
     onAuthChange() {
         this.setState(({data}) => ({
             data: data.withMutations(map => {
-                map.set("error", AuthStore.getError())
-                .set("registered", AuthStore.getRegistered());
+                map.set('error', AuthStore.getError())
+                .set('registered', AuthStore.getRegistered());
             }),
         }));
 
-        if (this.state.data.get("registered")) {
-            window.location.href = "/";
+        if (this.state.data.get('registered')) {
+            window.location.href = '/';
         }
     },
 
@@ -62,11 +62,11 @@ var IndexPage = React.createClass({
         var __ = translator(this.props.lang);
 
         var error;
-        if (this.state.data.get("error")) {
+        if (this.state.data.get('error')) {
             error = (
                 <Row>
                     <Col xs={12}>
-                        <Alert bsStyle="danger">{this.state.data.get("error")}</Alert>
+                        <Alert bsStyle="danger">{this.state.data.get('error')}</Alert>
                     </Col>
                 </Row>
             );
@@ -88,20 +88,20 @@ var IndexPage = React.createClass({
                         <form onSubmit={this.onRegister}>
                             <Input
                                 required
-                                label={__("Name")}
+                                label={__('Name')}
                                 ref="name"
                                 type="text" />
                             <Input
                                 required
-                                label={__("Email")}
+                                label={__('Email')}
                                 ref="email"
                                 type="email" />
                             <Input
                                 required
-                                label={__("Password")}
+                                label={__('Password')}
                                 ref="password"
                                 type="password" />
-                            <Button type="submit" bsStyle="primary">{__("Lagre")}</Button>
+                            <Button type="submit" bsStyle="primary">{__('Lagre')}</Button>
                         </form>
                     </Col>
                 </Row>
@@ -110,6 +110,6 @@ var IndexPage = React.createClass({
     },
 });
 
-import bootstrap from "../bootstrap";
+import bootstrap from '../bootstrap';
 bootstrap(IndexPage);
 export default IndexPage;

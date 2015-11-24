@@ -1,12 +1,12 @@
 /* eslint "no-console": 0 */
 
-import util from "util";
-import _ from "lodash";
-import bunyan from "bunyan";
-import settings from "../settings";
+import util from 'util';
+import _ from 'lodash';
+import bunyan from 'bunyan';
+import settings from '../settings';
 
 var logger = null;
-var opts = { name: "samklang" };
+var opts = { name: 'samklang' };
 var consoleLog = logger.child({console: true});
 var defaultSerializers = {
     res: (res) => {

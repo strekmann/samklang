@@ -1,7 +1,7 @@
-var path = require("path");
+var path = require('path');
 var fs = require('fs');
 var _ = require('lodash');
-var webpack = require("webpack");
+var webpack = require('webpack');
 var CommonsChunkPlugin = require('webpack/lib/optimize/CommonsChunkPlugin');
 
 var entry = {};
@@ -17,8 +17,8 @@ module.exports = {
     cache: true,
     entry: entry,
     output: {
-        path: path.join(__dirname, "public/js"),
-        filename: "[name].js",
+        path: path.join(__dirname, 'public/js'),
+        filename: '[name].js',
     },
     module: {
         loaders: [
@@ -26,7 +26,7 @@ module.exports = {
         ],
     },
     plugins: [
-        new CommonsChunkPlugin("common.js"),
+        new CommonsChunkPlugin('common.js'),
     ],
     externals: [
         (context, request, callback) => {

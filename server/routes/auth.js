@@ -1,16 +1,16 @@
-import express from "express";
-import {User} from "../models";
+import express from 'express';
+import {User} from '../models';
 
 var router = express.Router();
 
-router.post("/register", (req, res, next) => {
+router.post('/register', (req, res, next) => {
     let name = req.body.name.trim();
     let email = req.body.email.trim();
     let password = req.body.password;  // should not trim this
 
     // simple validation
     if (!name || !email || !password) {
-        return next(new Error(res.locals.__("All fields are needed")));
+        return next(new Error(res.locals.__('All fields are needed')));
     }
 
     let user = new User();

@@ -1,9 +1,9 @@
-import passport from "passport";
-import LocalStrategy from "passport-local";
+import passport from 'passport';
+import LocalStrategy from 'passport-local';
 
-import {User} from "../models";
-import log from "./logger";
-import settings from "../settings";
+import {User} from '../models';
+import log from './logger';
+import settings from '../settings';
 
 
 passport.serializeUser((user, done) => {

@@ -1,28 +1,28 @@
-import express from "express";
-import expressBunyan from "express-bunyan-logger";
-import libby from "libby";
-import moment from "moment";
-import path from "path";
-import consolidate from "consolidate";
+import express from 'express';
+import expressBunyan from 'express-bunyan-logger';
+import libby from 'libby';
+import moment from 'moment';
+import path from 'path';
+import consolidate from 'consolidate';
 
-import db from "./lib/db";
-import log from "./lib/logger";
-import {addRenderReact} from "./lib/middleware";
-import passport from "./lib/passport";
-import pkg from "../package";
-import settings from "./settings";
+import db from './lib/db';
+import log from './lib/logger';
+import {addRenderReact} from './lib/middleware';
+import passport from './lib/passport';
+import pkg from '../package';
+import settings from './settings';
 
-import indexRoutes from "./routes";
-import authRoutes from "./routes/auth";
+import indexRoutes from './routes';
+import authRoutes from './routes/auth';
 
 var app = libby(express, settings, db);
 
-settings.sessionName = settings.sessionName || pkg.name || "connect.sid";
+settings.sessionName = settings.sessionName || pkg.name || 'connect.sid';
 
-if (app.settings.env === "development" || app.settings.env === "production") {
+if (app.settings.env === 'development' || app.settings.env === 'production') {
     let bunyanOpts = {
         logger: log,
-        excludes: ["req", "res", "req-headers", "res-headers"],
+        excludes: ['req', 'res', 'req-headers', 'res-headers'],
     };
     app.use(expressBunyan(bunyanOpts));
     app.use(expressBunyan.errorLogger(bunyanOpts));
@@ -38,32 +38,32 @@ app.use((req, res, next) => {
     moment.locale(res.locals.locale);
     res.locals.stamp = app.stamp;
 
-    res.locals.html = "";
-    res.locals.page = "index";
+    res.locals.html = '';
+    res.locals.page = 'index';
     next();
 });
 
-app.engine("html", consolidate.lodash);
-app.set("view engine", "html");
-app.set("views", path.join(__dirname, "views"));
+app.engine('html', consolidate.lodash);
+app.set('view engine', 'html');
+app.set('views', path.join(__dirname, 'views'));
 
 // passport routes here bitte
-app.post("/login", passport.authenticate("local"), (req, res) => {
-    res.redirect("/");
+app.post('/login', passport.authenticate('local'), (req, res) => {
+    res.redirect('/');
 });
 
-app.use("/", indexRoutes);
-app.use("/_/auth", authRoutes);
+app.use('/', indexRoutes);
+app.use('/_/auth', authRoutes);
 
 // static files for development
-app.use("/_/", express.static(path.join(__dirname, "..", "public")));
+app.use('/_/', express.static(path.join(__dirname, '..', 'public')));
 
 app.use((err, req, res, next) => {
     log.error(err);
 
     res.format({
         html: () => {
-            res.status(500).render("500", {
+            res.status(500).render('500', {
                 error: err.message,
             });
         },
@@ -78,13 +78,13 @@ app.use((err, req, res, next) => {
 app.use((req, res, next) => {
     res.format({
         html: () => {
-            res.status(404).render("404", {
-                error: "file not found",
+            res.status(404).render('404', {
+                error: 'file not found',
             });
         },
         json: () => {
             res.status(404).json({
-                error: "file not found",
+                error: 'file not found',
             });
         },
     });

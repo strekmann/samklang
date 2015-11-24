@@ -1,14 +1,7 @@
 {
     "extends": "airbnb",
     "rules": {
-        "indent": [
-            1,
-        4
-        ],
-        "quotes": [
-            0,
-            "double"
-        ],
+        "indent": [ 1, 4 ],
         "brace-style": [ 2, "stroustrup", { "allowSingleLine": true } ],
         "no-unused-vars": 0,
         "no-var": 0,
