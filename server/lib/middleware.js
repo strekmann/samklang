@@ -35,7 +35,7 @@ var addRenderReact = (req, res, next) => {
         alt.bootstrap(JSON.stringify(data));
         html = Iso.render(ReactDOMServer.renderToString(React.createElement(element, {lang: req.lang})), alt.flush(), {react: true});
 
-        res.render("react",{
+        res.render("react", {
             html: html,
             page: page,
         });
