@@ -5,11 +5,11 @@ var webpack = require("webpack");
 var CommonsChunkPlugin = require('webpack/lib/optimize/CommonsChunkPlugin');
 
 var entry = {};
-var pages_path = path.join(__dirname, 'react/pages');
-var pages = fs.readdirSync(pages_path);
+var pagesPath = path.join(__dirname, 'react/pages');
+var pages = fs.readdirSync(pagesPath);
 _.each(pages, (page) => {
     if (path.extname(page) === '.js') {
-        entry[path.basename(page, '.js')] = path.join(pages_path, page);
+        entry[path.basename(page, '.js')] = path.join(pagesPath, page);
     }
 });
 
