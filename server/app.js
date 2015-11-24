@@ -34,7 +34,7 @@ app.use(app.passport.session());
 
 app.use(addRenderReact);
 
-app.use(function(req, res, next){
+app.use((req, res, next) => {
     moment.locale(res.locals.locale);
     res.locals.stamp = app.stamp;
 
@@ -58,16 +58,16 @@ app.use("/_/auth", authRoutes);
 // static files for development
 app.use("/_/", express.static(path.join(__dirname, "..", "public")));
 
-app.use(function(err, req, res, next){
+app.use((err, req, res, next) => {
     log.error(err);
 
     res.format({
-        html: function(){
+        html: () => {
             res.status(500).render("500", {
                 error: err.message,
             });
         },
-        json: function(){
+        json: () => {
             res.status(500).json({
                 error: err.message,
             });
@@ -75,14 +75,14 @@ app.use(function(err, req, res, next){
     });
 });
 
-app.use(function(req, res, next){
+app.use((req, res, next) => {
     res.format({
-        html: function(){
+        html: () => {
             res.status(404).render("404", {
                 error: "file not found",
             });
         },
-        json: function(){
+        json: () => {
             res.status(404).json({
                 error: "file not found",
             });

@@ -12,11 +12,11 @@ var port = process.env.PORT || settings.port || 3000;
 
 app.stamp = moment().format('YYMMDDHHmm');
 
-process.on('uncaughtException', function(err){
+process.on('uncaughtException', (err) => {
     log.fatal(err);
     process.exit(1);
 });
 
-http.createServer(app).listen(port, function(){
+http.createServer(app).listen(port, () => {
     log.info("Listening to port %s, env=%s, stamp=%s", port, env, app.stamp);
 });

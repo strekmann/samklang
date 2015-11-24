@@ -11,15 +11,15 @@ var UserSchema = new mongoose.Schema({
     email_verified: {type: Boolean, default: false},
 });
 
-UserSchema.pre("save", function(next){
+UserSchema.pre("save", (next) => {
     var user = this;
     if (!user.isModified("password")){ return next(); }
     if (user.password.length < 4){ return next(new Error("Password must be at least 4 characters long")); }
 
-    bcrypt.genSalt(SALT_WORK_FACTOR, function(err, salt){
+    bcrypt.genSalt(SALT_WORK_FACTOR, (err, salt) => {
         if (err){ return next(err); }
 
-        bcrypt.hash(user.password, salt, function(err, hash){
+        bcrypt.hash(user.password, salt, (err, hash) => {
             if (err){ return next(err); }
 
             user.password = hash;
@@ -28,8 +28,8 @@ UserSchema.pre("save", function(next){
     });
 });
 
-UserSchema.methods.authenticate = function(candidate, next){
-    bcrypt.compare(candidate, this.password, function(err, ok){
+UserSchema.methods.authenticate = (candidate, next) => {
+    bcrypt.compare(candidate, this.password, (err, ok) => {
         next(err, ok);
     });
 };

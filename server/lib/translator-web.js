@@ -1,5 +1,5 @@
-module.exports = function(){
-    function format(){
+module.exports = () => {
+    function format() {
         var args = [];
         var a;
         for (a in arguments){
@@ -11,17 +11,17 @@ module.exports = function(){
         var fmt = args.shift();
 
         if (args.length === 1 && typeof args[0] === 'object'){
-            return fmt.replace(/%\(\s*([^)]+)\s*\)s/g, function(m, v){
+            return fmt.replace(/%\(\s*([^)]+)\s*\)s/g, (m, v) => {
                 return String(args[0][v.trim()]);
             });
         }
 
-        return fmt.replace(/%s/g, function(){
+        return fmt.replace(/%s/g, () => {
             return String(args.shift());
         });
     }
 
-    return function(word){
+    return (word) => {
         var args = arguments;
         if (args.length === 0) { return ""; }
         args[0] = window.json_locale_data.messages[word] && window.json_locale_data.messages[word][1] || word;

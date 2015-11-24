@@ -6,12 +6,12 @@ import log from "./logger";
 import settings from "../settings";
 
 
-passport.serializeUser(function(user, done) {
+passport.serializeUser((user, done) => {
     done(null, user._id);
 });
 
-passport.deserializeUser(function(user_id, done) {
-    User.findById(user_id, function(err, user){
+passport.deserializeUser((user_id, done) => {
+    User.findById(user_id, (err, user) => {
         if (err) {
             return done(err.message, null);
         }
@@ -23,14 +23,14 @@ passport.deserializeUser(function(user_id, done) {
 });
 
 passport.passportLocal = new LocalStrategy(
-    function(email, password, done){
+    (email, password, done) => {
         email = email.toLowerCase();
 
-        User.findOne({email: email}, function(err, user) {
+        User.findOne({email: email}, (err, user) => {
             if (err) { return done(err); }
             if (!user) { return done(null, false, { message: 'Unknown user ' + email }); }
 
-            user.authenticate(password, function(err, ok) {
+            user.authenticate(password, (err, ok) => {
                 if (err) { return done(err); }
                 if (ok) {
                     return done(null, user);

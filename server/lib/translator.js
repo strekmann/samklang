@@ -1,5 +1,5 @@
-export default function(lang){
-    function format(){
+export default (lang) => {
+    function format() {
         var args = [];
         for (var a in arguments){
             args.push(arguments[a]);
@@ -10,17 +10,17 @@ export default function(lang){
         var fmt = args.shift();
 
         if (args.length === 1 && typeof args[0] === 'object'){
-            return fmt.replace(/%\(\s*([^)]+)\s*\)s/g, function(m, v){
+            return fmt.replace(/%\(\s*([^)]+)\s*\)s/g, (m, v) => {
                 return String(args[0][v.trim()]);
             });
         }
 
-        return fmt.replace(/%s/g, function(){
+        return fmt.replace(/%s/g, () => {
             return String(args.shift());
         });
     }
 
-    try{
+    try {
         var translations;
         if (typeof lang === 'object'){
             translations = lang;
@@ -29,16 +29,16 @@ export default function(lang){
             translations = require('../../public/js/' + lang + '/messages.json').messages;
         }
 
-        return function(word){
+        return (word) => {
             var args = arguments;
             if (args.length === 0) { return ""; }
             args[0] = translations[word] && translations[word][1] || word;
             return format.apply(this, args);
         };
-    } catch(e){
-        return function(word){
+    } catch (e) {
+        return (word) => {
             var util = require('util');
             return util.format.apply(this, arguments);
         };
     }
-}
+};

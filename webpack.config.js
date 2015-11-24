@@ -7,7 +7,7 @@ var CommonsChunkPlugin = require('webpack/lib/optimize/CommonsChunkPlugin');
 var entry = {};
 var pages_path = path.join(__dirname, 'react/pages');
 var pages = fs.readdirSync(pages_path);
-_.each(pages, function(page){
+_.each(pages, (page) => {
     if (path.extname(page) === '.js'){
         entry[path.basename(page, '.js')] = path.join(pages_path, page);
     }
@@ -29,7 +29,7 @@ module.exports = {
         new CommonsChunkPlugin("common.js"),
     ],
     externals: [
-        function(context, request, callback){
+        (context, request, callback) => {
             if (/lib\/translator$/.test(request)){
                 var file = fs.readFileSync('./server/lib/translator-web.js', {encoding: 'utf8'});
                 return callback(null, file);
