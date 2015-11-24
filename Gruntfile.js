@@ -88,14 +88,6 @@ module.exports = function(grunt) {
                 options: {
                     keyword: "__"
                 }
-            },
-            jade: {
-                src: "server/views/**/*.jade",
-                dest: "server/locale/templates/LC_MESSAGES/messages.pot",
-                options: {
-                    language: "jade",
-                    keyword: "__"
-                }
             }
         },
         abideMerge: {

@@ -1,0 +1,15 @@
+#: public/js/index.js:75
+msgid "Name"
+msgstr ""
+
+#: public/js/index.js:80
+msgid "Email"
+msgstr ""
+
+#: public/js/index.js:85
+msgid "Password"
+msgstr ""
+
+#: public/js/index.js:91
+msgid "Lagre"
+msgstr ""
