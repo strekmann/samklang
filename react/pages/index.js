@@ -17,6 +17,19 @@ var IndexPage = React.createClass({
         },
     },
 
+    getInitialState() {
+        return {
+            data: Immutable.Map({
+                error: null,
+                registered: false,
+            }),
+        };
+    },
+
+    shouldComponentUpdate(nextProps, nextState) {
+        return this.state.data !== nextState.data;
+    },
+
     onAuthChange() {
         this.setState(({data}) => ({
             data: data.withMutations(map => {
@@ -28,19 +41,6 @@ var IndexPage = React.createClass({
         if (this.state.data.get("registered")) {
             window.location.href = "/";
         }
-    },
-
-    shouldComponentUpdate(nextProps, nextState) {
-        return this.state.data !== nextState.data;
-    },
-
-    getInitialState() {
-        return {
-            data: Immutable.Map({
-                error: null,
-                registered: false,
-            }),
-        };
     },
 
     onRegister(e) {
