@@ -44,12 +44,12 @@ var IndexPage = React.createClass({
     },
 
     onRegister(e){
-        e.preventDefault();
         var userdata = {
             name: this.refs.name.getValue(),
             email: this.refs.email.getValue(),
             password: this.refs.password.getValue(),
         };
+        e.preventDefault();
         AuthActions.register(userdata);
     },
 

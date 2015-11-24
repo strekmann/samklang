@@ -27,12 +27,13 @@ var ensureAdmin = (req, res, next) => {
 
 var addRenderReact = (req, res, next) => {
     res.renderReact = (page, data) => {
-        moment.locale(req.lang);
-
+        var html;
         var element = require("../../react/pages/" + page).default;
 
+        moment.locale(req.lang);
+
         alt.bootstrap(JSON.stringify(data));
-        var html = Iso.render(ReactDOMServer.renderToString(React.createElement(element, {lang: req.lang})), alt.flush(), {react: true});
+        html = Iso.render(ReactDOMServer.renderToString(React.createElement(element, {lang: req.lang})), alt.flush(), {react: true});
 
         res.render("react",{
             html: html,

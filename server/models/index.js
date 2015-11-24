@@ -2,6 +2,8 @@ import mongoose from "mongoose";
 import shortid from "shortid";
 import bcrypt from "bcrypt";
 
+var User;
+
 var SALT_WORK_FACTOR = 10;
 
 var UserSchema = new mongoose.Schema({
@@ -34,6 +36,6 @@ UserSchema.methods.authenticate = (candidate, next) => {
     });
 };
 
-var User = mongoose.model('User', UserSchema);
+User = mongoose.model('User', UserSchema);
 
 export {User};

@@ -7,22 +7,7 @@ import settings from "../settings";
 
 var logger = null;
 var opts = { name: "samklang" };
-
-if (settings.bunyan){
-    opts = _.assign(opts, settings.bunyan);
-}
-
-logger = bunyan.createLogger(opts);
-
 var consoleLog = logger.child({console: true});
-console.log   = () => { consoleLog.debug(null, util.format.apply(this, arguments)); };
-console.debug = () => { consoleLog.debug(null, util.format.apply(this, arguments)); };
-console.info  = () => { consoleLog.info (null, util.format.apply(this, arguments)); };
-console.warn  = () => { consoleLog.warn (null, util.format.apply(this, arguments)); };
-console.error = () => { consoleLog.error(null, util.format.apply(this, arguments)); };
-
-export default logger;
-
 var defaultSerializers = {
     res: (res) => {
         if (!_.isObject(res)) { return res; }
@@ -32,9 +17,10 @@ var defaultSerializers = {
         };
     },
     req: (req) => {
+        var connection = req.connection || {};
+
         if (!_.isObject(req)) { return req; }
 
-        var connection = req.connection || {};
         return {
             method: req.method,
             url: req.url,
@@ -45,4 +31,17 @@ var defaultSerializers = {
     },
 };
 
+if (settings.bunyan){
+    opts = _.assign(opts, settings.bunyan);
+}
+
+logger = bunyan.createLogger(opts);
+
+console.log   = () => { consoleLog.debug(null, util.format.apply(this, arguments)); };
+console.debug = () => { consoleLog.debug(null, util.format.apply(this, arguments)); };
+console.info  = () => { consoleLog.info (null, util.format.apply(this, arguments)); };
+console.warn  = () => { consoleLog.warn (null, util.format.apply(this, arguments)); };
+console.error = () => { consoleLog.error(null, util.format.apply(this, arguments)); };
+
+export default logger;
 export {defaultSerializers};

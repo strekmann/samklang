@@ -1,13 +1,18 @@
 export default (lang) => {
+    var translations;
+
     function format() {
         var args = [];
-        for (var a in arguments){
+        var a;
+        var fmt;
+
+        for (a in arguments){
             args.push(arguments[a]);
         }
 
         if (args.length === 1){ return args[0]; }
 
-        var fmt = args.shift();
+        fmt = args.shift();
 
         if (args.length === 1 && typeof args[0] === 'object'){
             return fmt.replace(/%\(\s*([^)]+)\s*\)s/g, (m, v) => {
@@ -21,7 +26,6 @@ export default (lang) => {
     }
 
     try {
-        var translations;
         if (typeof lang === 'object'){
             translations = lang;
         }

@@ -15,9 +15,9 @@ import settings from "./settings";
 import indexRoutes from "./routes";
 import authRoutes from "./routes/auth";
 
-settings.sessionName = settings.sessionName || pkg.name || "connect.sid";
-
 var app = libby(express, settings, db);
+
+settings.sessionName = settings.sessionName || pkg.name || "connect.sid";
 
 if (app.settings.env === "development" || app.settings.env === "production"){
     let bunyanOpts = {

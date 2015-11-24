@@ -15,7 +15,6 @@
         "camelcase": 0,
         "prefer-const": 0,
         "no-shadow": 0,
-        "vars-on-top": 0,
         "new-cap": 0,
         "guard-for-in": 0,
         "space-after-keywords": 0,

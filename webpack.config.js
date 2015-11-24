@@ -30,8 +30,10 @@ module.exports = {
     ],
     externals: [
         (context, request, callback) => {
+            var file;
+
             if (/lib\/translator$/.test(request)){
-                var file = fs.readFileSync('./server/lib/translator-web.js', {encoding: 'utf8'});
+                file = fs.readFileSync('./server/lib/translator-web.js', {encoding: 'utf8'});
                 return callback(null, file);
             }
             callback();
