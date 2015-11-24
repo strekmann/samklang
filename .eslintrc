@@ -9,7 +9,7 @@
             0,
             "double"
         ],
-        "brace-style": 0,
+        "brace-style": [ 2, "stroustrup", { "allowSingleLine": true } ],
         "no-unused-vars": 0,
         "no-var": 0,
         "new-cap": 0,

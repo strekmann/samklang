@@ -39,7 +39,8 @@ export default (lang) => {
             args[0] = translations[word] && translations[word][1] || word;
             return format.apply(this, args);
         };
-    } catch (e) {
+    }
+    catch (e) {
         return (word) => {
             var util = require('util');
             return util.format.apply(this, arguments);
