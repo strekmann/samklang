@@ -116,7 +116,12 @@ module.exports = function(grunt) {
             }
         },
         eslint: {
-            target: ["**/*.js"]
+            target: [
+                "server/**/*.js",
+                "react/**/*.js",
+                "test/**/*.js",
+                "*.js"
+            ]
         }
     });
 
