@@ -6,15 +6,15 @@ export default (lang) => {
         var a;
         var fmt;
 
-        for (a in arguments){
+        for (a in arguments) {
             args.push(arguments[a]);
         }
 
-        if (args.length === 1){ return args[0]; }
+        if (args.length === 1) { return args[0]; }
 
         fmt = args.shift();
 
-        if (args.length === 1 && typeof args[0] === 'object'){
+        if (args.length === 1 && typeof args[0] === 'object') {
             return fmt.replace(/%\(\s*([^)]+)\s*\)s/g, (m, v) => {
                 return String(args[0][v.trim()]);
             });
@@ -26,7 +26,7 @@ export default (lang) => {
     }
 
     try {
-        if (typeof lang === 'object'){
+        if (typeof lang === 'object') {
             translations = lang;
         }
         else {

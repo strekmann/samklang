@@ -31,7 +31,7 @@ var defaultSerializers = {
     },
 };
 
-if (settings.bunyan){
+if (settings.bunyan) {
     opts = _.assign(opts, settings.bunyan);
 }
 

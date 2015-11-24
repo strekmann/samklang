@@ -3,7 +3,7 @@ import settings from "../settings";
 
 var db;
 
-if (process.env.NODE_ENV === "test"){
+if (process.env.NODE_ENV === "test") {
     db = mongoose.connect("mongodb://localhost/mocha_test");
 }
 else {

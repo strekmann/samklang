@@ -17,7 +17,7 @@ var IndexPage = React.createClass({
         },
     },
 
-    onAuthChange(){
+    onAuthChange() {
         this.setState(({data}) => ({
             data: data.withMutations(map => {
                 map.set("error", AuthStore.getError())
@@ -25,16 +25,16 @@ var IndexPage = React.createClass({
             }),
         }));
 
-        if (this.state.data.get("registered")){
+        if (this.state.data.get("registered")) {
             window.location.href = "/";
         }
     },
 
-    shouldComponentUpdate(nextProps, nextState){
+    shouldComponentUpdate(nextProps, nextState) {
         return this.state.data !== nextState.data;
     },
 
-    getInitialState(){
+    getInitialState() {
         return {
             data: Immutable.Map({
                 error: null,
@@ -43,7 +43,7 @@ var IndexPage = React.createClass({
         };
     },
 
-    onRegister(e){
+    onRegister(e) {
         var userdata = {
             name: this.refs.name.getValue(),
             email: this.refs.email.getValue(),
@@ -53,11 +53,11 @@ var IndexPage = React.createClass({
         AuthActions.register(userdata);
     },
 
-    render(){
+    render() {
         var __ = translator(this.props.lang);
 
         var error;
-        if (this.state.data.get("error")){
+        if (this.state.data.get("error")) {
             error = (
                 <Row>
                     <Col xs={12}>

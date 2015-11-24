@@ -19,7 +19,7 @@ var app = libby(express, settings, db);
 
 settings.sessionName = settings.sessionName || pkg.name || "connect.sid";
 
-if (app.settings.env === "development" || app.settings.env === "production"){
+if (app.settings.env === "development" || app.settings.env === "production") {
     let bunyanOpts = {
         logger: log,
         excludes: ["req", "res", "req-headers", "res-headers"],

@@ -15,14 +15,16 @@ var UserSchema = new mongoose.Schema({
 
 UserSchema.pre("save", (next) => {
     var user = this;
-    if (!user.isModified("password")){ return next(); }
-    if (user.password.length < 4){ return next(new Error("Password must be at least 4 characters long")); }
+    if (!user.isModified("password")) { return next(); }
+    if (user.password.length < 4) {
+        return next(new Error("Password must be at least 4 characters long"));
+    }
 
     bcrypt.genSalt(SALT_WORK_FACTOR, (err, salt) => {
-        if (err){ return next(err); }
+        if (err) { return next(err); }
 
         bcrypt.hash(user.password, salt, (err, hash) => {
-            if (err){ return next(err); }
+            if (err) { return next(err); }
 
             user.password = hash;
             next();

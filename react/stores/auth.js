@@ -5,7 +5,7 @@ import immutableStore from "alt/utils/ImmutableUtil";
 import AuthActions from "../actions/auth";
 
 class AuthStore {
-    constructor(){
+    constructor() {
         this.bindListeners({
             onError: AuthActions.error,
             onRegistered: AuthActions.registered,
@@ -17,19 +17,19 @@ class AuthStore {
         });
     }
 
-    onRegistered(){
+    onRegistered() {
         this.setState(this.state.set("registered", true));
     }
 
-    onError(data){
+    onError(data) {
         this.setState(this.state.set("error", data.error));
     }
 
-    static getError(){
+    static getError() {
         return this.getState().get("error");
     }
 
-    static getRegistered(){
+    static getRegistered() {
         return this.getState().get("registered");
     }
 }

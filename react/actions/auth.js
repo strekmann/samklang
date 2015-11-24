@@ -2,11 +2,11 @@ import alt from "../alt";
 import axios from "axios";
 
 class AuthActions {
-    constructor(){
+    constructor() {
         this.generateActions("error", "registered");
     }
 
-    register(data){
+    register(data) {
         axios.post("/_/auth/register", data)
         .then(response => {
             this.actions.registered(response.data);

@@ -13,12 +13,12 @@ var ensureAuthenticated = (req, res, next) => {
 };
 
 var ensureAdmin = (req, res, next) => {
-    if (!req.isAuthenticated()){
+    if (!req.isAuthenticated()) {
         req.session.returnTo = req.originalUrl || req.url;
         return res.redirect("/_/login");
     }
 
-    if (req.user.is_admin === true){
+    if (req.user.is_admin === true) {
         return next();
     }
 
