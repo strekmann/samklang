@@ -39,8 +39,8 @@ logger = bunyan.createLogger(opts);
 
 console.log = () => { consoleLog.debug(null, util.format.apply(this, arguments)); };
 console.debug = () => { consoleLog.debug(null, util.format.apply(this, arguments)); };
-console.info = () => { consoleLog.info (null, util.format.apply(this, arguments)); };
-console.warn = () => { consoleLog.warn (null, util.format.apply(this, arguments)); };
+console.info = () => { consoleLog.info(null, util.format.apply(this, arguments)); };
+console.warn = () => { consoleLog.warn(null, util.format.apply(this, arguments)); };
 console.error = () => { consoleLog.error(null, util.format.apply(this, arguments)); };
 
 export default logger;
