@@ -19,7 +19,6 @@
         "no-param-reassign": 0,
         "no-else-return": 0,
         "brace-style": 0,
-        "no-multi-spaces": 0,
         "no-spaced-func": 0,
         "react/sort-comp": 0,
         "react/prop-types": 0,
