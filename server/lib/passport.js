@@ -24,11 +24,11 @@ passport.deserializeUser((user_id, done) => {
 
 passport.passportLocal = new LocalStrategy(
     (email, password, done) => {
-        email = email.toLowerCase();
+        const _email = email.toLowerCase();
 
-        User.findOne({email: email}, (err, user) => {
+        User.findOne({email: _email}, (err, user) => {
             if (err) { return done(err); }
-            if (!user) { return done(null, false, { message: 'Unknown user ' + email }); }
+            if (!user) { return done(null, false, { message: 'Unknown user with email ' + _email }); }
 
             user.authenticate(password, (err, ok) => {
                 if (err) { return done(err); }
