@@ -16,6 +16,5 @@
         "prefer-const": 0,
         "no-shadow": 0,
         "guard-for-in": 0,
-        "react/prop-types": 0,
     },
 }

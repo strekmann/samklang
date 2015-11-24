@@ -9,6 +9,11 @@ import AuthStore from "../stores/auth";
 
 var IndexPage = React.createClass({
     displayName: "IndexPage",
+
+    propTypes: {
+        lang: React.PropTypes.string,
+    },
+
     mixins: [FluxyMixin],
 
     statics: {
