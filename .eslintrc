@@ -10,7 +10,6 @@
             "double"
         ],
         "no-unused-vars": 1,
-        "comma-dangle": 0,
         "no-var": 0,
         "space-before-blocks": 0,
         "camelcase": 0,

@@ -36,7 +36,7 @@ var addRenderReact = function (req, res, next) {
 
         res.render("react",{
             html: html,
-            page: page
+            page: page,
         });
     };
     next();

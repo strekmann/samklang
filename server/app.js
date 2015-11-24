@@ -22,7 +22,7 @@ var app = libby(express, settings, db);
 if (app.settings.env === "development" || app.settings.env === "production"){
     let bunyanOpts = {
         logger: log,
-        excludes: ["req", "res", "req-headers", "res-headers"]
+        excludes: ["req", "res", "req-headers", "res-headers"],
     };
     app.use(expressBunyan(bunyanOpts));
     app.use(expressBunyan.errorLogger(bunyanOpts));
@@ -64,14 +64,14 @@ app.use(function(err, req, res, next){
     res.format({
         html: function(){
             res.status(500).render("500", {
-                error: err.message
+                error: err.message,
             });
         },
         json: function(){
             res.status(500).json({
-                error: err.message
+                error: err.message,
             });
-        }
+        },
     });
 });
 
@@ -79,14 +79,14 @@ app.use(function(req, res, next){
     res.format({
         html: function(){
             res.status(404).render("404", {
-                error: "file not found"
+                error: "file not found",
             });
         },
         json: function(){
             res.status(404).json({
-                error: "file not found"
+                error: "file not found",
             });
-        }
+        },
     });
 });
 

@@ -28,7 +28,7 @@ var defaultSerializers = {
         if (!_.isObject(res)) { return res; }
         return {
             statusCode: res.statusCode,
-            header: res._header
+            header: res._header,
         };
     },
     req: function(req){
@@ -40,9 +40,9 @@ var defaultSerializers = {
             url: req.url,
             headers: req.headers,
             remoteAdress: connection.remoteAddress,
-            remotePort: connection.remotePort
+            remotePort: connection.remotePort,
         };
-    }
+    },
 };
 
 export {defaultSerializers};

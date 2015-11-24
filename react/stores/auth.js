@@ -8,12 +8,12 @@ class AuthStore {
     constructor(){
         this.bindListeners({
             onError: AuthActions.error,
-            onRegistered: AuthActions.registered
+            onRegistered: AuthActions.registered,
         });
 
         this.state = Immutable.Map({
             error: null,
-            registered: false
+            registered: false,
         });
     }
 

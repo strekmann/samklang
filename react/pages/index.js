@@ -13,8 +13,8 @@ var IndexPage = React.createClass({
 
     statics: {
         storeListeners: {
-            onAuthChange: AuthStore
-        }
+            onAuthChange: AuthStore,
+        },
     },
 
     onAuthChange(){
@@ -22,7 +22,7 @@ var IndexPage = React.createClass({
             data: data.withMutations(map => {
                 map.set("error", AuthStore.getError())
                 .set("registered", AuthStore.getRegistered());
-            })
+            }),
         }));
 
         if (this.state.data.get("registered")){
@@ -38,8 +38,8 @@ var IndexPage = React.createClass({
         return {
             data: Immutable.Map({
                 error: null,
-                registered: false
-            })
+                registered: false,
+            }),
         };
     },
 
@@ -48,7 +48,7 @@ var IndexPage = React.createClass({
         var userdata = {
             name: this.refs.name.getValue(),
             email: this.refs.email.getValue(),
-            password: this.refs.password.getValue()
+            password: this.refs.password.getValue(),
         };
         AuthActions.register(userdata);
     },
@@ -102,7 +102,7 @@ var IndexPage = React.createClass({
                 </Row>
             </Grid>
         );
-    }
+    },
 });
 
 import bootstrap from "../bootstrap";

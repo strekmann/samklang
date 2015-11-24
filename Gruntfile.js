@@ -10,33 +10,33 @@ module.exports = function(grunt) {
                     new webpack.DefinePlugin({
                         "process.env": {
                             // This has effect on the react lib size
-                            "NODE_ENV": JSON.stringify("production")
-                        }
+                            "NODE_ENV": JSON.stringify("production"),
+                        },
                     }),
                     new webpack.optimize.DedupePlugin(),
                     new webpack.optimize.UglifyJsPlugin()
-                )
+                ),
             },
             "build-dev": {
                 devtool: "sourcemap",
-                debug: true
-            }
+                debug: true,
+            },
         },
         sass: {
             options: {
                 includePaths: [
                     "node_modules/font-awesome/scss",
-                    "node_modules/bootstrap-sass/assets/stylesheets"
-                ]
+                    "node_modules/bootstrap-sass/assets/stylesheets",
+                ],
             },
             dest: {
                 options: {
-                    outputStyle: "compressed"
+                    outputStyle: "compressed",
                 },
                 files: {
-                    "public/css/site.css": "scss/styles.scss"
-                }
-            }
+                    "public/css/site.css": "scss/styles.scss",
+                },
+            },
         },
         copy: {
             font: {
@@ -46,75 +46,75 @@ module.exports = function(grunt) {
                 src: [
                     "node_modules/font-awesome/fonts/*",
                     "node_modules/bootstrap-sass/assets/fonts/bootstrap/*",
-                    "fonts/*"
+                    "fonts/*",
                 ],
-                dest: "public/fonts/"
+                dest: "public/fonts/",
             },
             img: {
                 expand: true,
                 cwd: "images",
                 src: ["**"],
-                dest: "public/images"
-            }
+                dest: "public/images",
+            },
         },
         watch: {
             clientjs: {
                 files: ["react/**/*.js"],
                 tasks: ["webpack:build-dev"],
                 options: {
-                    spawn: false
-                }
+                    spawn: false,
+                },
             },
             server: {
                 files: ["Gruntfile.js", "cluster.js", "server/**/*.js", "test/**/*.js"],
-                tasks: ["eslint"]
+                tasks: ["eslint"],
             },
             scss: {
                 files: ["scss/*.scss"],
-                tasks: ["sass", "concat:css"]
-            }
+                tasks: ["sass", "concat:css"],
+            },
         },
         abideExtract: {
             js: {
                 src: "server/**/*.js",
                 dest: "server/locale/templates/LC_MESSAGES/messages.pot",
                 options: {
-                    keyword: "__"
-                }
+                    keyword: "__",
+                },
             },
             client: {
                 src: "public/js/*.js",
                 dest: "server/locale/templates/LC_MESSAGES/messages.pot",
                 options: {
-                    keyword: "__"
-                }
-            }
+                    keyword: "__",
+                },
+            },
         },
         abideMerge: {
             messages: {
                 options: {
                     template: "server/locale/templates/LC_MESSAGES/messages.pot",
-                    localeDir: "server/locale"
-                }
-            }
+                    localeDir: "server/locale",
+                },
+            },
         },
         abideCompile: {
             json: {
                 dest: "public/js/",
                 options: {
                     type: "json",
-                    localeDir: "server/locale"
-                }
-            }
+                    localeDir: "server/locale",
+                },
+            },
         },
         eslint: {
             target: [
                 "server/**/*.js",
                 "react/**/*.js",
                 "test/**/*.js",
-                "*.js"
-            ]
-        }
+                "*.js",
+            ],
+        },
     });
 
     grunt.loadNpmTasks("grunt-sass");

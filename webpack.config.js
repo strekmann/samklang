@@ -18,15 +18,15 @@ module.exports = {
     entry: entry,
     output: {
         path: path.join(__dirname, "public/js"),
-        filename: "[name].js"
+        filename: "[name].js",
     },
     module: {
         loaders: [
-            { test: /.js$/, loader: 'babel-loader', exclude: /node_modules/ }
-        ]
+            { test: /.js$/, loader: 'babel-loader', exclude: /node_modules/ },
+        ],
     },
     plugins: [
-        new CommonsChunkPlugin("common.js")
+        new CommonsChunkPlugin("common.js"),
     ],
     externals: [
         function(context, request, callback){
@@ -35,6 +35,6 @@ module.exports = {
                 return callback(null, file);
             }
             callback();
-        }
-    ]
+        },
+    ],
 };

@@ -8,7 +8,7 @@ var UserSchema = new mongoose.Schema({
     _id: {type: String, required: true, unique: true, "default": shortid.generate},
     password: {type: String, required: true},
     email: {type: String, lowercase: true, required: true},
-    email_verified: {type: Boolean, default: false}
+    email_verified: {type: Boolean, default: false},
 });
 
 UserSchema.pre("save", function(next){
