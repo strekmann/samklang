@@ -16,8 +16,8 @@ production:
 watch:
 	@./node_modules/.bin/grunt watch
 
-hint:
-	@./node_modules/.bin/grunt hint
+lint:
+	@./node_modules/.bin/grunt eslint
 
 locales:
 	@./node_modules/.bin/grunt locales
