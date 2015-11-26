@@ -15,6 +15,16 @@ class AuthActions {
             this.actions.error(response.data);
         });
     }
+
+    login(data) {
+        axios.post('/_/auth/login', data)
+        .then(response => {
+            this.actions.registered(response.data);
+        })
+        .catch(response => {
+            this.actions.error(response.data);
+        });
+    }
 }
 
 export default alt.createActions(AuthActions);

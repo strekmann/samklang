@@ -54,6 +54,13 @@ var IndexPage = React.createClass({
         AuthActions.register(userdata);
     },
 
+    onLogin(e) {
+        e.preventDefault();
+        AuthActions.login({
+            email: this.refs.login_email.getValue(),
+            password: this.refs.login_password.getValue(),
+        });
+    },
 
     renderError() {
         var error;
@@ -82,6 +89,15 @@ var IndexPage = React.createClass({
                             <h1>Strekmann</h1>
                             <p>Info om awesum saus prosjekt og greier</p>
                         </section>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col xs={12}>
+                        <form onSubmit={this.onLogin}>
+                            <Input required label={__('E-mail')} ref="login_email" type="email" />
+                            <Input required label={__('Password')} ref="login_password" type="password" />
+                            <Button type="submit" bsStyle="primary">{__('Login')}</Button>
+                        </form>
                     </Col>
                 </Row>
                 <Row>

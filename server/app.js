@@ -4,6 +4,7 @@ import libby from 'libby';
 import moment from 'moment';
 import path from 'path';
 import consolidate from 'consolidate';
+import _ from 'lodash';
 
 import db from './lib/db';
 import log from './lib/logger';
@@ -48,7 +49,18 @@ app.set('view engine', 'html');
 app.set('views', path.join(__dirname, 'views'));
 
 // passport routes here bitte
-app.post('/login', passport.authenticate('local'), (req, res) => {
+app.post('/_/auth/login', (req, res, next) => {console.log(req.body); next(); }, passport.authenticate('local'), (req, res) => {
+    res.format({
+        html: () => {
+            res.redirect('/');
+        },
+        json: () => {
+            res.json(_.pick(req.user, '_id', 'name', 'email_verified'));
+        },
+    });
+});
+app.get('/_/auth/logout', (req, res) => {
+    req.logout();
     res.redirect('/');
 });
 

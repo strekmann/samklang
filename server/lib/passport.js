@@ -23,6 +23,10 @@ passport.deserializeUser((userId, done) => {
 });
 
 passport.passportLocal = new LocalStrategy(
+    {
+        usernameField: 'email',
+        passwordField: 'password',
+    },
     (email, password, done) => {
         const _email = email.toLowerCase();
 
