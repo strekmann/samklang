@@ -36,11 +36,11 @@ if (settings.bunyan) {
 const logger = bunyan.createLogger(opts);
 const consoleLog = logger.child({console: true});
 
-console.log = () => { consoleLog.debug(null, util.format.apply(this, arguments)); };
-console.debug = () => { consoleLog.debug(null, util.format.apply(this, arguments)); };
-console.info = () => { consoleLog.info(null, util.format.apply(this, arguments)); };
-console.warn = () => { consoleLog.warn(null, util.format.apply(this, arguments)); };
-console.error = () => { consoleLog.error(null, util.format.apply(this, arguments)); };
+console.log = function log() { consoleLog.debug(null, util.format.apply(this, arguments)); };
+console.debug = function debug() { consoleLog.debug(null, util.format.apply(this, arguments)); };
+console.info = function info() { consoleLog.info(null, util.format.apply(this, arguments)); };
+console.warn = function warn() { consoleLog.warn(null, util.format.apply(this, arguments)); };
+console.error = function error() { consoleLog.error(null, util.format.apply(this, arguments)); };
 
 export default logger;
 export {defaultSerializers};
