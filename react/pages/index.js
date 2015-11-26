@@ -2,10 +2,13 @@ import React from 'react';
 import translator from '../../server/lib/translator';
 import Immutable from 'immutable';
 import FluxyMixin from 'alt/mixins/FluxyMixin';
-import {Grid, Row, Col, Input, Button, Alert} from 'react-bootstrap';
+import {Grid, Row, Col, Alert} from 'react-bootstrap';
 
 import AuthActions from '../actions/auth';
 import AuthStore from '../stores/auth';
+
+import Login from '../components/auth/login';
+import Register from '../components/auth/register';
 
 var IndexPage = React.createClass({
     displayName: 'IndexPage',
@@ -44,24 +47,6 @@ var IndexPage = React.createClass({
         }));
     },
 
-    onRegister(e) {
-        var userdata = {
-            name: this.refs.name.getValue(),
-            email: this.refs.email.getValue(),
-            password: this.refs.password.getValue(),
-        };
-        e.preventDefault();
-        AuthActions.register(userdata);
-    },
-
-    onLogin(e) {
-        e.preventDefault();
-        AuthActions.login({
-            email: this.refs.login_email.getValue(),
-            password: this.refs.login_password.getValue(),
-        });
-    },
-
     renderError() {
         var error;
         if (this.state.data.get('error')) {
@@ -87,41 +72,12 @@ var IndexPage = React.createClass({
                     <Col xs={12}>
                         <section>
                             <h1>Strekmann</h1>
-                            <p>Info om awesum saus prosjekt og greier</p>
+                            <p>{__('Generic info about the proejct')}</p>
                         </section>
                     </Col>
                 </Row>
-                <Row>
-                    <Col xs={12}>
-                        <form onSubmit={this.onLogin}>
-                            <Input required label={__('E-mail')} ref="login_email" type="email" />
-                            <Input required label={__('Password')} ref="login_password" type="password" />
-                            <Button type="submit" bsStyle="primary">{__('Login')}</Button>
-                        </form>
-                    </Col>
-                </Row>
-                <Row>
-                    <Col xs={12}>
-                        <form onSubmit={this.onRegister}>
-                            <Input
-                                required
-                                label={__('Name')}
-                                ref="name"
-                                type="text" />
-                            <Input
-                                required
-                                label={__('Email')}
-                                ref="email"
-                                type="email" />
-                            <Input
-                                required
-                                label={__('Password')}
-                                ref="password"
-                                type="password" />
-                            <Button type="submit" bsStyle="primary">{__('Lagre')}</Button>
-                        </form>
-                    </Col>
-                </Row>
+                <Login lang={this.props.lang} />
+                <Register lang={this.props.lang} />
             </Grid>
         );
     },
@@ -138,7 +94,7 @@ var IndexPage = React.createClass({
                     <Col xs={12}>
                         <section>
                             <h1>{viewer.get('name')}</h1>
-                            <p>Info om awesum saus prosjekt og greier</p>
+                            <p>{__('More detailed info, maybe')}</p>
                         </section>
                     </Col>
                 </Row>
