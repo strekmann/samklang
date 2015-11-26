@@ -1,10 +1,9 @@
+/* eslint no-param-reassign: 0 */
+
 import passport from 'passport';
 import LocalStrategy from 'passport-local';
 
 import {User} from '../models';
-import log from './logger';
-import settings from '../settings';
-
 
 passport.serializeUser((user, done) => {
     done(null, user._id);
@@ -28,11 +27,11 @@ passport.passportLocal = new LocalStrategy(
         passwordField: 'password',
     },
     (email, password, done) => {
-        const _email = email.toLowerCase();
+        email = email.toLowerCase();
 
-        User.findOne({email: _email}, (err, user) => {
+        User.findOne({email: email}, (err, user) => {
             if (err) { return done(err); }
-            if (!user) { return done(null, false, { message: 'Unknown user with email ' + _email }); }
+            if (!user) { return done(null, false, { message: 'Unknown user with email ' + email }); }
 
             user.authenticate(password, (err, ok) => {
                 if (err) { return done(err); }
