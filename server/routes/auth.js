@@ -1,4 +1,5 @@
 import express from 'express';
+import _ from 'lodash';
 import {User} from '../models';
 
 var router = express.Router();
@@ -24,7 +25,7 @@ router.post('/register', (req, res, next) => {
         req.logIn(user, (err) => {
             if (err) { return next(err); }
 
-            res.sendStatus(200);
+            res.json(_.pick(user, '_id', 'name', 'email_verified'));
         });
     });
 });

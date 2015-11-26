@@ -13,12 +13,12 @@ class AuthStore {
 
         this.state = Immutable.Map({
             error: null,
-            registered: false,
+            viewer: null,
         });
     }
 
-    onRegistered() {
-        this.setState(this.state.set('registered', true));
+    onRegistered(data) {
+        this.setState(this.state.set('viewer', Immutable.fromJS(data)));
     }
 
     onError(data) {
@@ -29,8 +29,8 @@ class AuthStore {
         return this.getState().get('error');
     }
 
-    static getRegistered() {
-        return this.getState().get('registered');
+    static getViewer() {
+        return this.getState().get('viewer');
     }
 }
 

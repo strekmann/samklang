@@ -26,7 +26,7 @@ var IndexPage = React.createClass({
         return {
             data: Immutable.Map({
                 error: null,
-                registered: false,
+                viewer: AuthStore.getViewer(),
             }),
         };
     },
@@ -39,13 +39,9 @@ var IndexPage = React.createClass({
         this.setState(({data}) => ({
             data: data.withMutations(map => {
                 map.set('error', AuthStore.getError())
-                .set('registered', AuthStore.getRegistered());
+                .set('viewer', AuthStore.getViewer());
             }),
         }));
-
-        if (this.state.data.get('registered')) {
-            window.location.href = '/';
-        }
     },
 
     onRegister(e) {
@@ -58,9 +54,8 @@ var IndexPage = React.createClass({
         AuthActions.register(userdata);
     },
 
-    render() {
-        var __ = translator(this.props.lang);
 
+    renderError() {
         var error;
         if (this.state.data.get('error')) {
             error = (
@@ -71,6 +66,12 @@ var IndexPage = React.createClass({
                 </Row>
             );
         }
+        return error;
+    },
+
+    renderRegister() {
+        var __ = translator(this.props.lang);
+        var error = this.renderError();
 
         return (
             <Grid>
@@ -78,7 +79,7 @@ var IndexPage = React.createClass({
                 <Row>
                     <Col xs={12}>
                         <section>
-                            <h1>Samklang</h1>
+                            <h1>Strekmann</h1>
                             <p>Info om awesum saus prosjekt og greier</p>
                         </section>
                     </Col>
@@ -107,6 +108,40 @@ var IndexPage = React.createClass({
                 </Row>
             </Grid>
         );
+    },
+
+    renderSetup() {
+        var __ = translator(this.props.lang);
+        var error = this.renderError();
+        var viewer = this.state.data.get('viewer');
+
+        return (
+            <Grid>
+                {error}
+                <Row>
+                    <Col xs={12}>
+                        <section>
+                            <h1>{viewer.get('name')}</h1>
+                            <p>Info om awesum saus prosjekt og greier</p>
+                        </section>
+                    </Col>
+                </Row>
+            </Grid>
+        );
+    },
+
+    render() {
+        var viewer = this.state.data.get('viewer');
+        var page;
+
+        if (viewer) {
+            page = this.renderSetup();
+        }
+        else {
+            page = this.renderRegister();
+        }
+
+        return page;
     },
 });
 

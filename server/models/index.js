@@ -8,12 +8,13 @@ var SALT_WORK_FACTOR = 10;
 
 var UserSchema = new mongoose.Schema({
     _id: {type: String, required: true, unique: true, 'default': shortid.generate},
+    name: {type: String, required: true},
     password: {type: String, required: true},
     email: {type: String, lowercase: true, required: true},
     email_verified: {type: Boolean, default: false},
 });
 
-UserSchema.pre('save', (next) => {
+UserSchema.pre('save', function(next) {
     var user = this;
     if (!user.isModified('password')) { return next(); }
     if (user.password.length < 4) {
@@ -32,7 +33,7 @@ UserSchema.pre('save', (next) => {
     });
 });
 
-UserSchema.methods.authenticate = (candidate, next) => {
+UserSchema.methods.authenticate = function(candidate, next) {
     bcrypt.compare(candidate, this.password, (err, ok) => {
         next(err, ok);
     });
