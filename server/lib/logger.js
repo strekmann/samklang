@@ -5,9 +5,7 @@ import _ from 'lodash';
 import bunyan from 'bunyan';
 import settings from '../settings';
 
-var logger = null;
 var opts = { name: 'samklang' };
-var consoleLog = logger.child({console: true});
 var defaultSerializers = {
     res: (res) => {
         if (!_.isObject(res)) { return res; }
@@ -35,7 +33,8 @@ if (settings.bunyan) {
     opts = _.assign(opts, settings.bunyan);
 }
 
-logger = bunyan.createLogger(opts);
+const logger = bunyan.createLogger(opts);
+const consoleLog = logger.child({console: true});
 
 console.log = () => { consoleLog.debug(null, util.format.apply(this, arguments)); };
 console.debug = () => { consoleLog.debug(null, util.format.apply(this, arguments)); };
