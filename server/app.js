@@ -5,6 +5,7 @@ import moment from 'moment';
 import path from 'path';
 import consolidate from 'consolidate';
 import _ from 'lodash';
+import Socketio from 'socket.io';
 
 import db from './lib/db';
 import log from './lib/logger';
@@ -15,8 +16,13 @@ import settings from './settings';
 
 import indexRoutes from './routes';
 import authRoutes from './routes/auth';
+import socketRoutes from './routes/socket';
+
 
 var app = libby(express, settings, db);
+var io = new Socketio();
+io.path('/s');
+app.io = io;
 
 settings.sessionName = settings.sessionName || pkg.name || 'connect.sid';
 
@@ -49,7 +55,7 @@ app.set('view engine', 'html');
 app.set('views', path.join(__dirname, 'views'));
 
 // passport routes here bitte
-app.post('/_/auth/login', (req, res, next) => {console.log(req.body); next(); }, passport.authenticate('local'), (req, res) => {
+app.post('/_/auth/login', passport.authenticate('local'), (req, res) => {
     res.format({
         html: () => {
             res.redirect('/');
@@ -64,8 +70,14 @@ app.get('/_/auth/logout', (req, res) => {
     res.redirect('/');
 });
 
+app.get('/socket', function(req, res, next) {
+    res.render('socket');
+});
+
 app.use('/', indexRoutes);
 app.use('/_/auth', authRoutes);
+
+socketRoutes(app.io);
 
 // static files for development
 app.use('/_/', express.static(path.join(__dirname, '..', 'public')));

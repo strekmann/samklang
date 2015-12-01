@@ -9,6 +9,7 @@ import settings from './server/settings';
 
 var env = process.env.NODE_ENV || 'development';
 var port = process.env.PORT || settings.port || 3000;
+var server = http.createServer(app);
 
 app.stamp = moment().format('YYMMDDHHmm');
 
@@ -17,6 +18,8 @@ process.on('uncaughtException', (err) => {
     process.exit(1);
 });
 
-http.createServer(app).listen(port, () => {
+app.io.attach(server);
+
+server.listen(port, () => {
     log.info('Listening to port %s, env=%s, stamp=%s', port, env, app.stamp);
 });
