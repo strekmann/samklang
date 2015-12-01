@@ -4,6 +4,7 @@ import Immutable from 'immutable';
 import FluxyMixin from 'alt/mixins/FluxyMixin';
 import {Grid, Row, Col, Alert} from 'react-bootstrap';
 
+import SocketActions from '../actions/socket';
 import AuthActions from '../actions/auth';
 import AuthStore from '../stores/auth';
 
@@ -32,6 +33,10 @@ var IndexPage = React.createClass({
                 viewer: AuthStore.getViewer(),
             }),
         };
+    },
+
+    componentDidMount() {
+        SocketActions.setup();
     },
 
     shouldComponentUpdate(nextProps, nextState) {
