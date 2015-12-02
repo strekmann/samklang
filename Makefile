@@ -25,8 +25,7 @@ locales:
 test: lint
 	@NODE_ENV=test ./node_modules/.bin/mocha \
 		--reporter $(REPORTER) \
-		--ui bdd \
-		| ./node_modules/.bin/bunyan -o short
+		--ui bdd
 
 install:
 	npm install

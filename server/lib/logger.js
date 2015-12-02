@@ -33,14 +33,21 @@ if (settings.bunyan) {
     opts = _.assign(opts, settings.bunyan);
 }
 
-const logger = bunyan.createLogger(opts);
-const consoleLog = logger.child({console: true});
+let logger = bunyan.createLogger(opts);
 
-console.log = function log() { consoleLog.debug(null, util.format.apply(this, arguments)); };
-console.debug = function debug() { consoleLog.debug(null, util.format.apply(this, arguments)); };
-console.info = function info() { consoleLog.info(null, util.format.apply(this, arguments)); };
-console.warn = function warn() { consoleLog.warn(null, util.format.apply(this, arguments)); };
-console.error = function error() { consoleLog.error(null, util.format.apply(this, arguments)); };
+if (process.env.NODE_ENV === 'test') {
+    logger = console;
+    logger.fatal = logger.error;
+}
+else {
+    const consoleLog = logger.child({console: true});
+    console.log = function log() { consoleLog.debug(null, util.format.apply(this, arguments)); };
+    console.debug = function debug() { consoleLog.debug(null, util.format.apply(this, arguments)); };
+    console.info = function info() { consoleLog.info(null, util.format.apply(this, arguments)); };
+    console.warn = function warn() { consoleLog.warn(null, util.format.apply(this, arguments)); };
+    console.error = function error() { consoleLog.error(null, util.format.apply(this, arguments)); };
+}
+
 
 export default logger;
 export {defaultSerializers};
