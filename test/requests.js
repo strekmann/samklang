@@ -5,14 +5,14 @@ describe('basic requests', () => {
     var passportStub = require('passport-stub');
     var User = require('../server/models').User;
 
-    /*
     before((done) => {
         app.db.connection.db.dropDatabase(() => {
             var testUser;
             passportStub.install(app);
             testUser = new User({
                 name: 'Testuser',
-                email: 'testuser@ntnu.no',
+                email: 'testuser@example.com',
+                password: 'dust',
                 is_admin: false,
             });
             testUser.save((err, user) => {
@@ -27,7 +27,6 @@ describe('basic requests', () => {
             done();
         });
     });
-    */
 
     describe('when fetching unknown url', () => {
         it('expect return status 404', (done) => {
