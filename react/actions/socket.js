@@ -3,7 +3,7 @@ import io from 'socket.io-client';
 
 class SocketActions {
     constructor() {
-        this.generateActions('error', 'joined');
+        this.generateActions('error', 'joined', 'connected', 'usercount');
     }
 
     setup() {
@@ -11,8 +11,21 @@ class SocketActions {
         this.socket = io({
             path: '/s',
         });
-        this.socket.on('joined', data => {
-            this.actions.joined(data);
+
+        // Handle default socket events
+        this.socket.on('connect', data => {
+            this.actions.connected(true);
+        });
+        this.socket.on('error', data => {
+            this.actions.error(data);
+        });
+        this.socket.on('disconnect', data => {
+            this.actions.connected(false);
+        });
+
+        // Handle socket app events
+        this.socket.on('usercount', data => {
+            this.actions.usercount(data.users);
         });
     }
 

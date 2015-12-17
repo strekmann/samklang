@@ -1,10 +1,13 @@
+import log from '../lib/logger';
+
 var usernames = {};
 var numUsers = 0;
 
 function socket(io) {
     io.on('connection', socket => {
         var addedUser = false;
-        console.log('connection');
+        log.info('socket connected', socket.id);
+        io.emit('usercount', {users: io.engine.clientsCount});
 
         // when the client emits 'new message', this listens and executes
         socket.on('new message', function(data) {
@@ -49,6 +52,7 @@ function socket(io) {
 
         // when the user disconnects.. perform this
         socket.on('disconnect', function() {
+            io.emit('usercount', {users: io.engine.clientsCount});
             // remove the username from global usernames list
             if (addedUser) {
                 delete usernames[socket.username];

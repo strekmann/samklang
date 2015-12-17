@@ -31,6 +31,8 @@ var IndexPage = React.createClass({
             data: Immutable.Map({
                 error: null,
                 viewer: AuthStore.getViewer(),
+                wsconnected: AuthStore.isWSConnected(),
+                usercount: AuthStore.getUserCount(),
             }),
         };
     },
@@ -47,7 +49,9 @@ var IndexPage = React.createClass({
         this.setState(({data}) => ({
             data: data.withMutations(map => {
                 map.set('error', AuthStore.getError())
-                .set('viewer', AuthStore.getViewer());
+                .set('viewer', AuthStore.getViewer())
+                .set('wsconnected', AuthStore.isWSConnected())
+                .set('usercount', AuthStore.getUserCount());
             }),
         }));
     },
@@ -73,6 +77,7 @@ var IndexPage = React.createClass({
         return (
             <Grid>
                 {error}
+                {this.state.data.get('wsconnected') ? __('ON') + ' ' + this.state.data.get('usercount') : __('OFF')}
                 <Row>
                     <Col xs={12}>
                         <section>
@@ -95,6 +100,7 @@ var IndexPage = React.createClass({
         return (
             <Grid>
                 {error}
+                {this.state.data.get('wsconnected') ? __('ON') + ' ' + this.state.data.get('usercount') : __('OFF')}
                 <Row>
                     <Col xs={12}>
                         <section>

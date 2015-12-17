@@ -17,7 +17,7 @@
   },
   "homepage": "https://github.com/strekmann/samklang#readme",
   "dependencies": {
-    "alt": "^0.17.8",
+    "alt": "^0.16.10",
     "async": "^1.5.0",
     "axios": "^0.7.0",
     "bcrypt": "^0.8.5",
