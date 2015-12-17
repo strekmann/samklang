@@ -6,7 +6,7 @@ var numUsers = 0;
 function socket(io) {
     io.on('connection', socket => {
         var addedUser = false;
-        log.info('socket connected', socket.id);
+        log.info('socket connected', socket.id, socket.request.user.name);
         io.emit('usercount', {users: io.engine.clientsCount});
 
         // when the client emits 'new message', this listens and executes

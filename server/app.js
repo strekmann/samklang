@@ -5,6 +5,7 @@ import moment from 'moment';
 import path from 'path';
 import consolidate from 'consolidate';
 import _ from 'lodash';
+import passportSocketIO from 'passport.socketio';
 import Socketio from 'socket.io';
 
 import db from './lib/db';
@@ -21,7 +22,19 @@ import socketRoutes from './routes/socket';
 
 var app = libby(express, settings, db);
 var io = new Socketio();
+var socketOptions = _.assign(app.sessionConfig, {
+    success: (data, accept) => {
+        log.debug('successful auth');
+        accept();
+    },
+    fail: (data, message, error, accept) => {
+        log.debug('auth failed', message);
+        accept(new Error(message));
+    },
+});
 io.path('/s');
+
+io.use(passportSocketIO.authorize(socketOptions));
 app.io = io;
 
 settings.sessionName = settings.sessionName || pkg.name || 'connect.sid';
