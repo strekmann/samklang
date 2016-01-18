@@ -16,12 +16,10 @@ import Socketio from 'socket.io';
 
 import db from './lib/db';
 import log from './lib/logger';
-import {addRenderReact} from './lib/middleware';
 import passport from './lib/passport';
 import pkg from '../package';
 import settings from './settings';
 
-import indexRoutes from './routes';
 import authRoutes from './routes/auth';
 import socketRoutes from './routes/socket';
 
@@ -58,8 +56,6 @@ app.passport = passport;
 app.use(app.passport.initialize());
 app.use(app.passport.session());
 
-//app.use(addRenderReact);
-
 // set locale and timestamp for client files
 app.use((req, res, next) => {
     moment.locale(res.locals.locale);
@@ -68,7 +64,7 @@ app.use((req, res, next) => {
 });
 
 // set user
-app.use(function (req, res, next) {
+app.use((req, res, next) => {
     if (!res.locals.data) {
         res.locals.data = {};
     }
@@ -101,11 +97,10 @@ app.get('/_/auth/logout', (req, res) => {
     res.redirect('/');
 });
 
-app.get('/socket', function(req, res, next) {
+app.get('/socket', (req, res) => {
     res.render('socket');
 });
 
-//app.use('/', indexRoutes);
 app.use('/_/auth', authRoutes);
 
 socketRoutes(app.io);
@@ -133,12 +128,12 @@ app.use((req, res) => {
             });
         }
         else {
-            res.status(404).send("Not found");
+            res.status(404).send('Not found');
         }
     });
 });
 
-app.use((err, req, res, next) => {
+app.use((err, req, res) => {
     log.error(err);
 
     res.format({
@@ -155,7 +150,7 @@ app.use((err, req, res, next) => {
     });
 });
 
-app.use((req, res, next) => {
+app.use((req, res) => {
     res.format({
         html: () => {
             res.status(404).render('404', {

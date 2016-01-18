@@ -5,7 +5,6 @@ import FluxyMixin from 'alt/mixins/FluxyMixin';
 import {Grid, Row, Col, Alert} from 'react-bootstrap';
 
 import SocketActions from '../actions/socket';
-import AuthActions from '../actions/auth';
 import AuthStore from '../stores/auth';
 
 import Login from '../components/auth/login';
@@ -17,7 +16,7 @@ const App = React.createClass({
     statics: {
         storeListeners: {
             onAuthChange: AuthStore,
-        }
+        },
     },
 
     getInitialState() {

@@ -4,7 +4,7 @@ import App from '../react/components/App';
 
 const routes = (
     <Route>
-        <Route path='/' component={App} />
+        <Route path="/" component={App} />
     </Route>
 );
 
