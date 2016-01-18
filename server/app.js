@@ -5,6 +5,12 @@ import moment from 'moment';
 import path from 'path';
 import consolidate from 'consolidate';
 import _ from 'lodash';
+import Iso from 'iso';
+import alt from '../react/alt';
+import routes from '../react/routes';
+import { match, RoutingContext } from 'react-router';
+import React from 'react';
+import ReactDOMServer from 'react-dom/server';
 import passportSocketIO from 'passport.socketio';
 import Socketio from 'socket.io';
 
@@ -52,14 +58,26 @@ app.passport = passport;
 app.use(app.passport.initialize());
 app.use(app.passport.session());
 
-app.use(addRenderReact);
+//app.use(addRenderReact);
 
+// set locale and timestamp for client files
 app.use((req, res, next) => {
     moment.locale(res.locals.locale);
     res.locals.stamp = app.stamp;
+    next();
+});
 
-    res.locals.html = '';
-    res.locals.page = 'index';
+// set user
+app.use(function (req, res, next) {
+    if (!res.locals.data) {
+        res.locals.data = {};
+    }
+    res.locals.data.AuthStore = {
+        viewer: _.pick(req.user, '_id', 'name', 'email_verified'),
+        wsconnected: false,
+        usercount: 0,
+        locale: req.locale,
+    };
     next();
 });
 
@@ -87,13 +105,38 @@ app.get('/socket', function(req, res, next) {
     res.render('socket');
 });
 
-app.use('/', indexRoutes);
+//app.use('/', indexRoutes);
 app.use('/_/auth', authRoutes);
 
 socketRoutes(app.io);
 
 // static files for development
 app.use('/_/', express.static(path.join(__dirname, '..', 'public')));
+
+app.use((req, res) => {
+    alt.bootstrap(JSON.stringify(res.locals.data || {}));
+    match({ routes, location: req.url }, (err, redirectLocation, renderProps) => {
+        if (err) {
+            res.status(500).send(err.message);
+        }
+        else if (redirectLocation) {
+            res.redirect(302, redirectLocation.pathname + redirectLocation.search);
+        }
+        else if (renderProps) {
+            const iso = new Iso();
+            const content = ReactDOMServer.renderToString(<RoutingContext {...renderProps} />);
+            iso.add(content, alt.flush());
+
+            const html = iso.render(content);
+            res.render('react', {
+                html: html,
+            });
+        }
+        else {
+            res.status(404).send("Not found");
+        }
+    });
+});
 
 app.use((err, req, res, next) => {
     log.error(err);

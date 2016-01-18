@@ -11,19 +11,17 @@ import AuthStore from '../stores/auth';
 import Login from '../components/auth/login';
 import Register from '../components/auth/register';
 
-var IndexPage = React.createClass({
-    displayName: 'IndexPage',
+const App = React.createClass({
+    mixins: [FluxyMixin],
 
     propTypes: {
         lang: React.PropTypes.string,
     },
 
-    mixins: [FluxyMixin],
-
     statics: {
         storeListeners: {
             onAuthChange: AuthStore,
-        },
+        }
     },
 
     getInitialState() {
@@ -33,6 +31,7 @@ var IndexPage = React.createClass({
                 viewer: AuthStore.getViewer(),
                 wsconnected: AuthStore.isWSConnected(),
                 usercount: AuthStore.getUserCount(),
+                locale: AuthStore.getLocale(),
             }),
         };
     },
@@ -51,7 +50,8 @@ var IndexPage = React.createClass({
                 map.set('error', AuthStore.getError())
                 .set('viewer', AuthStore.getViewer())
                 .set('wsconnected', AuthStore.isWSConnected())
-                .set('usercount', AuthStore.getUserCount());
+                .set('usercount', AuthStore.getUserCount())
+                .set('locale', AuthStore.getLocale());
             }),
         }));
     },
@@ -71,7 +71,7 @@ var IndexPage = React.createClass({
     },
 
     renderRegister() {
-        var __ = translator(this.props.lang);
+        var __ = translator(this.state.data.get('locale'));
         var error = this.renderError();
 
         return (
@@ -86,14 +86,14 @@ var IndexPage = React.createClass({
                         </section>
                     </Col>
                 </Row>
-                <Login lang={this.props.lang} />
-                <Register lang={this.props.lang} />
+                <Login lang={this.state.data.get('locale')} />
+                <Register lang={this.state.data.get('locale')} />
             </Grid>
         );
     },
 
     renderSetup() {
-        var __ = translator(this.props.lang);
+        var __ = translator(this.state.data.get('locale'));
         var error = this.renderError();
         var viewer = this.state.data.get('viewer');
 
@@ -117,7 +117,7 @@ var IndexPage = React.createClass({
         var viewer = this.state.data.get('viewer');
         var page;
 
-        if (viewer) {
+        if (viewer.get('_id')) {
             page = this.renderSetup();
         }
         else {
@@ -128,6 +128,4 @@ var IndexPage = React.createClass({
     },
 });
 
-import bootstrap from '../bootstrap';
-bootstrap(IndexPage);
-export default IndexPage;
+export default App;

@@ -8,6 +8,8 @@ router.get('/', (req, res, next) => {
     if (req.user) {
         data.AuthStore = {
             viewer: _.pick(req.user, '_id', 'name', 'email_verified'),
+            wsconnected: false,
+            usercount: 0,
         };
     }
     res.renderReact('index', data);

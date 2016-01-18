@@ -19,6 +19,7 @@ class AuthStore {
             viewer: null,
             wsconnected: false,
             usercount: 0,
+            locale: 'en',
         });
     }
 
@@ -52,6 +53,10 @@ class AuthStore {
 
     static getUserCount() {
         return this.getState().get('usercount');
+    }
+
+    static getLocale() {
+        return this.getState().get('locale');
     }
 }
 
