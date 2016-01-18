@@ -6,7 +6,7 @@ import AuthActions from '../../actions/auth';
 
 var Login = React.createClass({
     propTypes: {
-        lang: React.PropTypes.string,
+        locale: React.PropTypes.string,
     },
 
     onLogin(e) {
@@ -18,7 +18,7 @@ var Login = React.createClass({
     },
 
     render() {
-        var __ = translator(this.props.lang);
+        var __ = translator(this.props.locale);
         return (
             <Row>
                 <Col xs={12}>

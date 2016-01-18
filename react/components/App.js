@@ -14,10 +14,6 @@ import Register from '../components/auth/register';
 const App = React.createClass({
     mixins: [FluxyMixin],
 
-    propTypes: {
-        lang: React.PropTypes.string,
-    },
-
     statics: {
         storeListeners: {
             onAuthChange: AuthStore,
@@ -86,8 +82,8 @@ const App = React.createClass({
                         </section>
                     </Col>
                 </Row>
-                <Login lang={this.state.data.get('locale')} />
-                <Register lang={this.state.data.get('locale')} />
+                <Login locale={this.state.data.get('locale')} />
+                <Register locale={this.state.data.get('locale')} />
             </Grid>
         );
     },

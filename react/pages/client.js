@@ -12,7 +12,7 @@ import moment from 'moment';
   The element is created and we just render it into the container
 */
 
-moment.locale(document.documentElement.getAttribute('lang'));
+moment.locale(document.documentElement.getAttribute('locale'));
 
 Iso.bootstrap((state, _, container) => {
     alt.bootstrap(state);
