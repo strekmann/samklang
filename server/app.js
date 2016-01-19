@@ -159,7 +159,7 @@ app.use((req, res) => {
     });
 });
 
-app.use((err, req, res) => {
+app.use((err, req, res, next) => {
     log.error(err);
 
     res.format({
@@ -176,7 +176,7 @@ app.use((err, req, res) => {
     });
 });
 
-app.use((req, res) => {
+app.use((req, res, next) => {
     res.format({
         html: () => {
             res.status(404).render('404', {
