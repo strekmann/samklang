@@ -170,7 +170,7 @@ app.use((err, req, res, next) => {
         },
         json: () => {
             res.status(500).json({
-                error: err.message,
+                error: err,
             });
         },
     });
