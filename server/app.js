@@ -21,8 +21,10 @@ import pkg from '../package';
 import settings from './settings';
 
 import authRoutes from './routes/auth';
+import siteRoutes from './routes/site';
 import socketRoutes from './routes/socket';
 
+import { Site } from './models';
 
 var app = libby(express, settings, db);
 var io = new Socketio();
@@ -77,6 +79,29 @@ app.use((req, res, next) => {
     next();
 });
 
+// route '/'
+app.get('/', (req, res, next) => {
+    if (req.user) {
+        Site.find({admins: req.user._id}).populate('admins', 'name').exec((err, sites) => {
+            if (err) {
+                return next(err);
+            }
+            res.locals.data.SiteStore = {
+                error: null,
+                sites: sites,
+            };
+            next();
+        });
+    }
+    else {
+        res.locals.data.SiteStore = {
+            error: null,
+            sites: [],
+        };
+        next();
+    }
+});
+
 app.engine('html', consolidate.lodash);
 app.set('view engine', 'html');
 app.set('views', path.join(__dirname, 'views'));
@@ -102,6 +127,7 @@ app.get('/socket', (req, res) => {
 });
 
 app.use('/_/auth', authRoutes);
+app.use('/_/site', siteRoutes);
 
 socketRoutes(app.io);
 

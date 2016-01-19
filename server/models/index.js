@@ -2,11 +2,9 @@ import mongoose from 'mongoose';
 import shortid from 'shortid';
 import bcrypt from 'bcrypt';
 
-var User;
+const SALT_WORK_FACTOR = 10;
 
-var SALT_WORK_FACTOR = 10;
-
-var UserSchema = new mongoose.Schema({
+const UserSchema = new mongoose.Schema({
     _id: {type: String, required: true, unique: true, 'default': shortid.generate},
     name: {type: String, required: true},
     password: {type: String, required: true},
@@ -14,7 +12,7 @@ var UserSchema = new mongoose.Schema({
     email_verified: {type: Boolean, default: false},
 });
 
-UserSchema.pre('save', function(next) {
+UserSchema.pre('save', function generatePassword(next) {
     var user = this;
     if (!user.isModified('password')) { return next(); }
     if (user.password.length < 4) {
@@ -33,12 +31,19 @@ UserSchema.pre('save', function(next) {
     });
 });
 
-UserSchema.methods.authenticate = function(candidate, next) {
+UserSchema.methods.authenticate = function authenticateUser(candidate, next) {
     bcrypt.compare(candidate, this.password, (err, ok) => {
         next(err, ok);
     });
 };
 
-User = mongoose.model('User', UserSchema);
+const SiteSchema = new mongoose.Schema({
+    _id: {type: String, required: true, unique: true}, // identifier - part of URL
+    name: {type: String, required: true, unique: true},
+    admins: [{type: String, ref: 'User', index: true }],
+});
 
-export {User};
+const User = mongoose.model('User', UserSchema);
+const Site = mongoose.model('Site', SiteSchema);
+
+export {User, Site};

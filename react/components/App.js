@@ -9,6 +9,8 @@ import AuthStore from '../stores/auth';
 
 import Login from '../components/auth/login';
 import Register from '../components/auth/register';
+import SiteList from '../components/site/list';
+import SiteCreateForm from '../components/site/create';
 
 const App = React.createClass({
     mixins: [FluxyMixin],
@@ -104,6 +106,8 @@ const App = React.createClass({
                         </section>
                     </Col>
                 </Row>
+                <SiteList locale={this.state.data.get('locale')} />
+                <SiteCreateForm locale={this.state.data.get('locale')}/>
             </Grid>
         );
     },
