@@ -38,7 +38,17 @@ UserSchema.methods.authenticate = function authenticateUser(candidate, next) {
 };
 
 const SiteSchema = new mongoose.Schema({
-    _id: {type: String, required: true, unique: true}, // identifier - part of URL
+    identifier: {
+        type: String,
+        required: true,
+        unique: true,
+        validate: {
+            validator: (v) => {
+                return /[a-z0-9-]{5,}/.test(v);
+            },
+            message: 'At least five characters: lowercased letters, numbers and hyphens allowed.',
+        },
+    }, // part of URL
     name: {type: String, required: true, unique: true},
     admins: [{type: String, ref: 'User', index: true }],
 });

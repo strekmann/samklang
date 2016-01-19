@@ -14,7 +14,7 @@ router.post('/create', ensureAuthenticated, (req, res, next) => {
 
     const site = new Site();
     site.name = name;
-    site._id = identifier;
+    site.identifier = identifier;
     site.admins.addToSet(req.user._id);
     site.save((err) => {
         if (err) { return next(err); }
