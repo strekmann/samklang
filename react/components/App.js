@@ -79,7 +79,7 @@ const App = React.createClass({
                     <Col xs={12}>
                         <section>
                             <h1>Strekmann</h1>
-                            <p>{__('Generic info about the proejct')}</p>
+                            <p>{__('Generic info about the project')}</p>
                         </section>
                     </Col>
                 </Row>

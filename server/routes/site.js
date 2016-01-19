@@ -16,9 +16,12 @@ router.post('/create', ensureAuthenticated, (req, res, next) => {
     site.name = name;
     site.identifier = identifier;
     site.admins.addToSet(req.user._id);
-    site.save((err) => {
+    site.save((err, site) => {
         if (err) { return next(err); }
-        res.json({site: site});
+        site.populate('admins', 'username', (err, site) => {
+            if (err) { return next(err); }
+            res.json({site: site});
+        });
     });
 });
 

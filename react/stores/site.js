@@ -22,7 +22,7 @@ class SiteStore {
     }
 
     onCreated(data) {
-        this.setState(this.state.set('sites', this.state.get('sites').push(data)));
+        this.setState(this.state.updateIn(['sites'], sites => sites.push(Immutable.fromJS(data.site))));
     }
 
     static getError() {

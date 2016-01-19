@@ -12,7 +12,12 @@ class SiteActions {
             this.actions.created(response.data);
         })
         .catch(response => {
-            this.actions.error(response.data);
+            if (response instanceof Error) {
+                this.actions.error(response.message);
+            }
+            else {
+                this.actions.error(response.data);
+            }
         });
     }
 }
