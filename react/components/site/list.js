@@ -1,7 +1,7 @@
 import React from 'react';
 import Immutable from 'immutable';
 import FluxyMixin from 'alt/mixins/FluxyMixin';
-import { Grid, Row, Col } from 'react-bootstrap';
+import { Row, Col } from 'react-bootstrap';
 import { Link } from 'react-router';
 
 import translator from '../../../server/lib/translator';
@@ -39,25 +39,23 @@ const SiteList = React.createClass({
     },
 
     render() {
-        const __ = translator(this.props.locale || this.state.data.get('locale'));
+        const __ = translator(this.props.locale);
         if (this.state.data.get('sites').count()) {
             return (
-                <Grid>
-                    <Row>
-                        <Col xs={12}>
-                        <h2>{__('Sites you administer')}</h2>
-                        {this.state.data.get('sites').map(site =>
-                            <div className="site" key={site.get('_id')}>
-                                <h3>{site.get('name')}</h3>
-                                <Link to={`/${site.get('identifier')}`}>{site.get('identifier')}</Link>
-                                <p>{site.get('admins').map(user =>
-                                    <span key={`${site.get('_id')}-${user.get('_id')}`}>{user.get('name')}</span>
-                                )}</p>
-                            </div>
-                        )}
-                        </Col>
-                    </Row>
-                </Grid>
+                <Row>
+                    <Col xs={12}>
+                    <h2>{__('Sites you administer')}</h2>
+                    {this.state.data.get('sites').map(site =>
+                        <div className="site" key={site.get('_id')}>
+                            <h3>{site.get('name')}</h3>
+                            <Link to={`/${site.get('identifier')}`}>{site.get('identifier')}</Link>
+                            <p>{site.get('admins').map(user =>
+                                <span key={`${site.get('_id')}-${user.get('_id')}`}>{user.get('name')}</span>
+                            )}</p>
+                        </div>
+                    )}
+                    </Col>
+                </Row>
             );
         }
         return <div />;

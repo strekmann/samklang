@@ -9,8 +9,6 @@ import AuthStore from '../stores/auth';
 
 import Login from '../components/auth/login';
 import Register from '../components/auth/register';
-import SiteList from '../components/site/list';
-import SiteCreateForm from '../components/site/create';
 
 const App = React.createClass({
     mixins: [FluxyMixin],
@@ -37,9 +35,11 @@ const App = React.createClass({
         SocketActions.setup();
     },
 
+    /*
     shouldComponentUpdate(nextProps, nextState) {
         return this.state.data !== nextState.data;
     },
+    */
 
     onAuthChange() {
         this.setState(({data}) => ({
@@ -73,6 +73,7 @@ const App = React.createClass({
 
         return (
             <Grid>
+                {this.props.children}
                 {error}
                 {this.state.data.get('wsconnected') ? __('ON') + ' ' + this.state.data.get('usercount') : __('OFF')}
                 <Row>
@@ -95,20 +96,21 @@ const App = React.createClass({
         var viewer = this.state.data.get('viewer');
 
         return (
-            <Grid>
-                {error}
-                {this.state.data.get('wsconnected') ? __('ON') + ' ' + this.state.data.get('usercount') : __('OFF')}
-                <Row>
-                    <Col xs={12}>
-                        <section>
-                            <h1>{viewer.get('name')}</h1>
-                            <p>{__('More detailed info, maybe')}</p>
-                        </section>
-                    </Col>
-                </Row>
-                <SiteList locale={this.state.data.get('locale')} />
-                <SiteCreateForm locale={this.state.data.get('locale')}/>
-            </Grid>
+            <div>
+                <Grid>
+                    {error}
+                    {this.state.data.get('wsconnected') ? __('ON') + ' ' + this.state.data.get('usercount') : __('OFF')}
+                    <Row>
+                        <Col xs={12}>
+                            <section>
+                                <h1>{viewer.get('name')}</h1>
+                                <p>{__('More detailed info, maybe')}</p>
+                            </section>
+                        </Col>
+                    </Row>
+                </Grid>
+                {this.props.children}
+            </div>
         );
     },
 
