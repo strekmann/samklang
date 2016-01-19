@@ -42,6 +42,7 @@ const SiteSchema = new mongoose.Schema({
         type: String,
         required: true,
         unique: true,
+        index: true,
         validate: {
             validator: (v) => {
                 return /[a-z0-9-]{5,}/.test(v);
