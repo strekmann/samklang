@@ -43,7 +43,7 @@ const SiteSchema = new mongoose.Schema({
         required: true,
         unique: true,
         index: true,
-        validate: {
+        validate: { // TODO: Change to allow for capital letters in identifier, but disallow same identifier using other cased letters.
             validator: (v) => {
                 return /[a-z0-9-]{5,}/.test(v);
             },
