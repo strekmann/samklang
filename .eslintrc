@@ -3,7 +3,7 @@
     "rules": {
         "indent": [ 1, 4 ],
         "brace-style": [ 2, "stroustrup", { "allowSingleLine": true } ],
-        "no-unused-vars": 1,
+        "no-unused-vars": [ 1, { "vars": "all", "args": "after-used", "argsIgnorePattern": "req|res|next" } ],
         "no-var": 0,
         "new-cap": 0,
         "no-shadow": 0,
