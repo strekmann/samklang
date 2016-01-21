@@ -26,17 +26,20 @@ const Dashboard = React.createClass({
         };
     },
     render() {
-        return (
-            <Grid>
-                <Row>
-                    <Col xs={12}>
-                        <h1>Dashboard</h1>;
-                        <SiteList locale={this.state.data.get('locale')} />
-                        <SiteCreateForm locale={this.state.data.get('locale')}/>
-                    </Col>
-                </Row>
-            </Grid>
-        );
+        if (this.state.data.get('viewer').get('_id')) {
+            return (
+                <Grid>
+                    <Row>
+                        <Col xs={12}>
+                            <h1>Dashboard</h1>
+                            <SiteList locale={this.state.data.get('locale')} />
+                            <SiteCreateForm locale={this.state.data.get('locale')}/>
+                        </Col>
+                    </Row>
+                </Grid>
+            );
+        }
+        return <div />;
     },
 });
 
