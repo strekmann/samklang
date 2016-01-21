@@ -9,7 +9,7 @@ const Site = React.createClass({
             <Grid>
                 <Row>
                     <Col xs={12}>
-                        <h1>{`HEIAA ${this.props.params.identifier}`}</h1>
+                        <h1>{`${this.props.params.identifier} main page`}</h1>
                     </Col>
                 </Row>
             </Grid>

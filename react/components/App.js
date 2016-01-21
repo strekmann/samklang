@@ -81,7 +81,7 @@ const App = React.createClass({
                 <Row>
                     <Col xs={12}>
                         <section>
-                            <h1>Strekmann</h1>
+                            <h1>Strekmann login</h1>
                             <p>{__('Generic info about the project')}</p>
                         </section>
                     </Col>
@@ -105,8 +105,7 @@ const App = React.createClass({
                     <Row>
                         <Col xs={12}>
                             <section>
-                                <h1>{viewer.get('name')}</h1>
-                                <p>{__('More detailed info, maybe')}</p>
+                                <p>{__('Something personal, sticky on all pages: ')}{viewer.get('name')}</p>
                             </section>
                         </Col>
                     </Row>
