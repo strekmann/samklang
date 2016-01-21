@@ -38,8 +38,12 @@ var socketOptions = _.assign(app.sessionConfig, {
         accept(new Error(message));
     },
 });
-io.path('/s');
 
+app.engine('html', consolidate.lodash);
+app.set('view engine', 'html');
+app.set('views', path.join(__dirname, 'views'));
+
+io.path('/s');
 io.use(passportSocketIO.authorize(socketOptions));
 app.io = io;
 
@@ -101,10 +105,6 @@ app.get('/', (req, res, next) => {
         next();
     }
 });
-
-app.engine('html', consolidate.lodash);
-app.set('view engine', 'html');
-app.set('views', path.join(__dirname, 'views'));
 
 // passport routes here bitte
 app.post('/_/auth/login', passport.authenticate('local'), (req, res) => {
