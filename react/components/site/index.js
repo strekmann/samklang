@@ -2,6 +2,8 @@ import React from 'react';
 import { Grid, Row, Col } from 'react-bootstrap';
 
 const Site = React.createClass({
+    propTypes: {params: React.PropTypes.object},
+
     render() {
         return (
             <Grid>

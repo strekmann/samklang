@@ -11,6 +11,8 @@ import Login from '../components/auth/login';
 import Register from '../components/auth/register';
 
 const App = React.createClass({
+    propTypes: {children: React.PropTypes.element},
+
     mixins: [FluxyMixin],
 
     statics: {
