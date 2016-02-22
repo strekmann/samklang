@@ -1,6 +1,8 @@
 import alt from '../alt';
 import io from 'socket.io-client';
 
+let socket;
+
 class SocketActions {
     constructor() {
         this.generateActions('error', 'joined', 'connected', 'usercount');
@@ -8,29 +10,35 @@ class SocketActions {
 
     setup() {
         // set up socket
-        this.socket = io({
+        socket = io({
             path: '/s',
         });
 
         // Handle default socket events
-        this.socket.on('connect', data => {
+        socket.on('connect', data => {
             this.actions.connected(true);
         });
-        this.socket.on('error', data => {
+        socket.on('error', data => {
             this.actions.error(data);
         });
-        this.socket.on('disconnect', data => {
+        socket.on('disconnect', data => {
             this.actions.connected(false);
         });
 
         // Handle socket app events
-        this.socket.on('usercount', data => {
+        socket.on('usercount', data => {
             this.actions.usercount(data.users);
         });
+        console.log("S", this);
     }
 
     login(data) {
-        this.socket.emit('login', data);
+        socket.emit('login', data);
+    }
+
+    sendMessage(message) {
+        console.log("T", this);
+        socket.emit('dust', message);
     }
 }
 
