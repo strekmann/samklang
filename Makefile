@@ -1,7 +1,11 @@
-REPORTER = spec
-
 build:
-	@./node_modules/.bin/grunt
+	npm run build
+
+watch:
+	npm run watch
+
+test: lint
+	npm test
 
 production:
 	@npm install
@@ -13,27 +17,19 @@ production:
 	cp -r server/views dist/server/
 	cp -r node_modules dist
 
-watch:
-	@./node_modules/.bin/grunt watch
-
-lint:
-	@./node_modules/.bin/grunt eslint
-
-locales:
-	@./node_modules/.bin/grunt locales
-
-test: lint
-	@NODE_ENV=test ./node_modules/.bin/mocha \
-		--reporter $(REPORTER) \
-		--ui bdd
-
 install:
 	npm install
 
+update:
+	npm update
+
 run:
-	nodemon dev.js | ./node_modules/.bin/bunyan -o short
+	npm run nodemon
+
+lint:
+	npm run lint
 
 clean:
-	rm -r ./node_modules ./public ./dist
+	rm -r ./node_modules ./public
 
-.PHONY: build production watch test hint locales install update clean
+.PHONY: build watch install update run lint test clean
