@@ -13,7 +13,6 @@ const UserSchema = new mongoose.Schema({
     is_active: { type: Boolean, default: true },
     is_admin: { type: Boolean, default: false },
     created: { type: Date, required: true, default: Date.now },
-    google_id: { type: String },
 });
 
 UserSchema.pre('save', function generatePassword(next) {
@@ -58,6 +57,32 @@ UserSchema.set('toJSON', {
     },
 });
 
+const SiteSchema = new mongoose.Schema({
+    identifier: { // part of URL
+        type: String,
+        required: true,
+        unique: true,
+        index: true,
+        validate: {
+            // TODO: Change to allow for capital letters in identifier, but
+            // disallow same identifier using other cased letters.
+            validator: (v) => /[a-z0-9-]{5,}/.test(v),
+            message: 'At least five characters: lowercased letters, numbers and hyphens allowed.',
+        },
+    },
+    name: { type: String, required: true, unique: true },
+    admins: [{ type: String, ref: 'User', index: true }],
+});
+
+SiteSchema.set('toJSON', {
+    transform: (document, ret) => {
+        ret.id = ret._id;
+        delete ret._id;
+        delete ret.__v;
+    },
+});
+
 module.exports = {
     User: mongoose.model('User', UserSchema),
+    Site: mongoose.model('Site', SiteSchema),
 };

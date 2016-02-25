@@ -1,18 +1,18 @@
 module.exports = {
     bunyan: {
         level: 'debug',
-        name: 'boilerplate'
+        name: 'samklang'
     },
     express: {
         port: 3000,
         trust_proxy: false,
         apiurl: 'http://localhost:3000',
-        apiversion: '0'
+        apiversion: '1'
     },
     session: {
         secret: 'sessionsecret',
         cookiesecret: 'cookiesecret',
-        name: 's7n.sid',
+        name: 'samklang.sid',
         saveUninitialized: false,
         rolling: false,
         resave: false,

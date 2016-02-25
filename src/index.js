@@ -153,8 +153,12 @@ app.post('/auth/register', (req, res, next) => {
 });
 
 /** API endpoints **/
+app.use((req, res, next) => {
+    next();
+});
 app.use('/api/1/auth', api.auth);
 app.use('/api/1/profile', api.profile);
+app.use('/api/1/sites', api.sites);
 
 /** Static stuff **/
 app.use(serveStatic(path.join(__dirname, '..', 'dist', 'public')));

@@ -2,6 +2,9 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Grid, Row, Col, PageHeader } from 'react-bootstrap';
 
+import SiteList from './SiteList';
+import { loadSites } from '../actions/sites';
+
 class Home extends React.Component {
 
     render() {
@@ -27,6 +30,7 @@ class Home extends React.Component {
                             <li>{this.props.users.getIn([viewerid, 'name'])}</li>
                             <li>{this.props.users.getIn([viewerid, 'email'])}</li>
                         </ul>
+                        <SiteList sites={this.props.sites}/>
                     </Col>
                 </Row>
             </Grid>
@@ -34,15 +38,26 @@ class Home extends React.Component {
     }
 }
 
+Home.fetchData = function fetchData(store, params, cookie) {
+    const viewer = store.getState().get('viewer');
+    if (viewer.get('id')) {
+        return Promise.all([
+            store.dispatch(loadSites(cookie)),
+        ]);
+    }
+};
+
 Home.propTypes = {
     viewer: React.PropTypes.object,
     users: React.PropTypes.object,
+    sites: React.PropTypes.object,
 };
 
 function select(state) {
     return {
         viewer: state.get('viewer'),
         users: state.get('users'),
+        sites: state.get('sites'),
     };
 }
 

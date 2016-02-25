@@ -23,13 +23,10 @@ class Login extends React.Component {
             <Grid>
                 <Row>
                     <Col xs={12}>
-                        <h1>Login</h1>
-                        <fieldset>
-                            <Button href="/auth/google">Google login</Button>
-                        </fieldset>
+                        <h1>Sign in</h1>
                         <form onSubmit={this.onLogin}>
                             <fieldset>
-                                <h2>Login using email</h2>
+                                <p>Sign in using email and password</p>
                                 <Input
                                     type="email"
                                     ref="email"
@@ -40,8 +37,7 @@ class Login extends React.Component {
                                     ref="password"
                                     placeholder="password"
                                 />
-                                <p>Hint: email: example@ninja.com password: ninja</p>
-                                <Button type="submit" bsStyle="primary">Login</Button>
+                                <Button type="submit" bsStyle="primary">Sign in</Button>
                                 {" or "}
                                 <Link to="/register">Register</Link>
                             </fieldset>
