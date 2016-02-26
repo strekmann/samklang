@@ -1,12 +1,12 @@
 import React from 'react';
 import { Grid, Row, Col } from 'react-bootstrap';
 import { connect } from 'react-redux';
-import { loadUser } from '../actions/user';
 import Immutable from 'immutable';
 
 class Profile extends React.Component {
     render() {
         const user = this.props.users.get(this.props.user.get('id'));
+        console.log(user);
         return (
             <Grid>
                 <Row>
@@ -20,12 +20,6 @@ class Profile extends React.Component {
         );
     }
 }
-
-Profile.fetchData = function fetchData(store, params) {
-    return Promise.all([
-        store.dispatch(loadUser(params.id)),
-    ]);
-};
 
 Profile.propTypes = {
     user: React.PropTypes.object,

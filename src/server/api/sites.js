@@ -1,21 +1,26 @@
 import { Router } from 'express';
 import { Site } from '../models';
 
-const router = new Router();
+function getSites(req) {
+    return Site.find({ admins: req.user.id }).populate('admins', 'name').exec();
+}
 
+const router = new Router();
 router.route('/')
 .get((req, res, next) => {
     if (req.user) {
-        Site.find({ admins: req.user }).populate('admins', 'name').exec((err, sites) => {
-            if (err) {
-                return next(err);
-            }
-            return res.json({ sites });
+        getSites(req)
+        .then((sites) => {
+            res.json({ sites });
+        })
+        .catch((err) => {
+            next(err);
         });
     }
     else {
-        return res.json({ sites: [] });
+        res.json({ sites: [] });
     }
 });
 
 export default router;
+export { getSites };

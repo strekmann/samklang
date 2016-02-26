@@ -2,7 +2,6 @@
 
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
-import methodOverride from 'method-override';
 import session from 'express-session';
 import errorHandler from 'errorhandler';
 import express from 'express';
@@ -22,6 +21,9 @@ import socketRoutes from './server/socket';
 import log from './server/lib/logger';
 import { User } from './server/models';
 import './server/lib/db';
+
+import * as profileAPI from './server/api/profile';
+import * as siteAPI from './server/api/sites';
 
 const app = express();
 const httpServer = http.createServer(app);
@@ -89,7 +91,6 @@ io.use(passportSocketIO.authorize(socketOptions));
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-app.use(methodOverride());
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -162,6 +163,61 @@ app.use('/api/1/sites', api.sites);
 
 /** Static stuff **/
 app.use(serveStatic(path.join(__dirname, '..', 'dist', 'public')));
+
+/** Initial store data **/
+app.use((req, res, next) => {
+    res.store = {};
+    res.store.viewer = {};
+    res.store.viewer.formErrors = [];
+
+    // Using JSON stringify and parse to make sure server data is similar to client data.
+    if (req.user) {
+        res.store.viewer.id = req.user.id;
+        res.store.users = {};
+        res.store.users[req.user.id] = JSON.parse(JSON.stringify(req.user));
+    }
+    next();
+});
+
+app.get('/profile/:id', (req, res, next) => {
+    profileAPI.getUser(req)
+    .then((user) => {
+        if (!user) {
+            res.status(404).json({
+                status: 404,
+                error: 'Could not find user',
+            });
+        }
+        else {
+            res.store.user = {};
+            res.store.user.id = user.id;
+            res.store.users = res.store.users || {};
+            res.store.users[user.id] = JSON.parse(JSON.stringify(user));
+        }
+        next();
+    })
+    .catch((err) => {
+        next(err);
+    });
+});
+
+app.get('/', (req, res, next) => {
+    // TODO: Move if check into getSites
+    if (req.user) {
+        siteAPI.getSites(req)
+        .then((sites) => {
+            res.store.sites = sites || {};
+            next();
+        })
+        .catch((err) => {
+            next(err);
+        });
+    }
+    else {
+        res.store.sites = {};
+        next();
+    }
+});
 
 /** Universal app endpoint **/
 app.get('*', universal);
