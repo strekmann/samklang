@@ -1,7 +1,7 @@
 import log from './lib/logger';
 
 let numUsers = 0;
-const usernames = {};
+const names = {};
 
 function socketRoutes(io) {
     io.on('connection', socket => {
@@ -13,23 +13,23 @@ function socketRoutes(io) {
         socket.on('new message', (data) => {
             // we tell the client to execute 'new message'
             socket.broadcast.emit('new message', {
-                username: socket.username,
+                name: socket.name,
                 message: data,
             });
         });
 
         // when the client emits 'add user', this listens and executes
-        socket.on('add user', (username) => {
-            // we store the username in the socket session for this client
-            socket.username = username;
-            // add the client's username to the global list
-            usernames[username] = username;
+        socket.on('add user', (name) => {
+            // we store the name in the socket session for this client
+            socket.name = name;
+            // add the client's name to the global list
+            names[name] = name;
             ++numUsers;
             addedUser = true;
             socket.emit('login', { numUsers });
             // echo globally (all clients) that a person has connected
             socket.broadcast.emit('user joined', {
-                username: socket.username,
+                name: socket.name,
                 numUsers,
             });
         });
@@ -37,28 +37,28 @@ function socketRoutes(io) {
         // when the client emits 'typing', we broadcast it to others
         socket.on('typing', () => {
             socket.broadcast.emit('typing', {
-                username: socket.username,
+                name: socket.name,
             });
         });
 
         // when the client emits 'stop typing', we broadcast it to others
         socket.on('stop typing', () => {
             socket.broadcast.emit('stop typing', {
-                username: socket.username,
+                name: socket.name,
             });
         });
 
         // when the user disconnects.. perform this
         socket.on('disconnect', () => {
             io.emit('usercount', { users: io.engine.clientsCount });
-            // remove the username from global usernames list
+            // remove the name from global names list
             if (addedUser) {
-                delete usernames[socket.username];
+                delete names[socket.name];
                 --numUsers;
 
                 // echo globally that this client has left
                 socket.broadcast.emit('user left', {
-                    username: socket.username,
+                    name: socket.name,
                     numUsers,
                 });
             }

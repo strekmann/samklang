@@ -7,6 +7,9 @@ import Login from './containers/Login';
 import Register from './containers/Register';
 import Account from './containers/Account';
 import Profile from './containers/Profile';
+import SiteList from './containers/SiteList';
+import SiteCreate from './containers/SiteCreate';
+import Feed from './containers/Feed';
 
 export default (store) => {
     const requireAuth = (nextState, replace, callback) => {
@@ -27,6 +30,11 @@ export default (store) => {
             <Route path="register" component={Register} />
             <Route path="account" component={Account} onEnter={requireAuth} />
             <Route path="profile/:id" component={Profile} />
+            <Route path="sites">
+                <IndexRoute component={SiteList} />
+                <Route path="new" component={SiteCreate} />
+            </Route>
+            <Route path=":id" component={Feed} />
         </Route>
     );
 };

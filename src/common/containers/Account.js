@@ -10,11 +10,9 @@ class Account extends React.Component {
     constructor(props) {
         super(props);
         this.saveUser = this.saveUser.bind(this);
-        this.setUsername = this.setUsername.bind(this);
         this.setName = this.setName.bind(this);
         this.setEmail = this.setEmail.bind(this);
         this.state = {
-            username: props.users.getIn([props.viewer.get('id'), 'username']),
             name: props.users.getIn([props.viewer.get('id'), 'name']),
             email: props.users.getIn([props.viewer.get('id'), 'email']),
         };
@@ -25,7 +23,6 @@ class Account extends React.Component {
         const nextViewer = nextProps.users.get(nextProps.viewer.get('id'));
         if (viewer !== nextViewer) {
             this.setState({
-                username: nextViewer.get('username'),
                 name: nextViewer.get('name'),
                 email: nextViewer.get('email'),
             });
@@ -33,10 +30,6 @@ class Account extends React.Component {
     }
 
     // action events
-    setUsername() {
-        this.setState({ username: this.refs.username.getValue() });
-    }
-
     setName() {
         this.setState({ name: this.refs.name.getValue() });
     }
@@ -48,7 +41,6 @@ class Account extends React.Component {
     saveUser(e) {
         e.preventDefault();
         this.props.dispatch(saveUser({
-            username: this.refs.username.getValue(),
             name: this.refs.name.getValue(),
             email: this.refs.email.getValue(),
         }));
@@ -87,18 +79,6 @@ class Account extends React.Component {
                                     label="ID"
                                     labelClassName="col-md-3"
                                     wrapperClassName="col-md-9" value={viewerid}
-                                />
-                                <Input
-                                    label={__('Username')}
-                                    labelClassName="col-md-3"
-                                    wrapperClassName="col-md-9"
-                                    type="text"
-                                    placeholder={__('Username')}
-                                    value={this.state.username}
-                                    bsStyle={formErrors.get('username') ? 'error' : null}
-                                    help={formErrors.get('username')}
-                                    onChange={this.setUsername}
-                                    ref="username"
                                 />
                                 <Input
                                     label={__('Name')}

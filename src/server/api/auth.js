@@ -28,7 +28,6 @@ router.route('/account')
         }
         */
 
-        user.username = req.body.user.username;
         user.name = req.body.user.name;
         user.email = req.body.user.email;
         user.save((saveErr) => {

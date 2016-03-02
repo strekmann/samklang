@@ -9,8 +9,6 @@ import {
     REGISTER_USER_ERROR,
 } from '../constants';
 
-import { loadSites } from './sites';
-
 function loginUserSuccess(payload) {
     return {
         type: LOGIN_USER_SUCCESS,
@@ -48,7 +46,6 @@ export function loginUser(payload) {
         })
         .then((data) => {
             dispatch(loginUserSuccess(Immutable.fromJS(data.user)));
-            dispatch(loadSites());
             dispatch(routeActions.push('/'));
         })
         .catch((error) => {
