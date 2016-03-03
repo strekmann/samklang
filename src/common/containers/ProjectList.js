@@ -9,13 +9,10 @@ import { loadProjects } from '../actions/projects';
 
 class ProjectList extends React.Component {
     componentWillMount() {
-        this.props.dispatch(loadProjects(this.props.site.identifier));
+        this.props.dispatch(loadProjects(this.props.site.get('identifier')));
     }
 
     render() {
-        if (!this.props.projects) {
-            return <div />;
-        }
         return (
             <Grid>
                 <Row>
@@ -24,10 +21,10 @@ class ProjectList extends React.Component {
                             <Button>New</Button>
                         </LinkContainer>
                         <h2>{'Projects you administer'}</h2>
-                        {this.props.projects.toList().map(
+                        {this.props.projects && this.props.projects.toList().map(
                             project => <div className="project" key={project.get('id')}>
                                 <h3>{project.get('name')}</h3>
-                                <Link to={`/${project.get('identifier')}`}>
+                                <Link to={`/${this.props.site.get('identifier')}/p/${project.get('identifier')}`}>
                                     {project.get('identifier')}
                                 </Link>
                             </div>

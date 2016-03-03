@@ -11,7 +11,7 @@ export default ({ id }) => (
                     {id ? <a href="/auth/logout">Log out</a> : '' }
                 </Col>
                 <Col xs={4}>
-                    <Link to="sites">All sites</Link>
+                    <Link to="/sites">All sites</Link>
                 </Col>
             </Row>
         </Grid>
