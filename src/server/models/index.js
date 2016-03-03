@@ -19,14 +19,14 @@ UserSchema.pre('save', function generatePassword(next) {
         return next(new Error('Password must be at least 8 characters long'));
     }
 
-    bcrypt.genSalt(SALT_WORK_FACTOR, (err, salt) => {
+    return bcrypt.genSalt(SALT_WORK_FACTOR, (err, salt) => {
         if (err) { return next(err); }
 
-        bcrypt.hash(user.password, salt, (err, hash) => {
+        return bcrypt.hash(user.password, salt, (err, hash) => {
             if (err) { return next(err); }
 
             user.password = hash;
-            next();
+            return next();
         });
     });
 });

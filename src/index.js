@@ -103,7 +103,7 @@ app.use((req, res, next) => {
         if (id !== 'favicon' && id !== 'undefined') {
             log.debug('checking site', id);
             Site.findOne({ identifier: id }).exec((err, site) => {
-                if (err) { return next(err); }
+                if (err) { next(err); }
                 if (site) {
                     req.site = {
                         id: site._id,
@@ -169,14 +169,14 @@ app.post('/auth/register', (req, res, next) => {
     user.name = name;
     user.email = email;
     user.password = password;
-    user.save((err, createdUser) => {
+    return user.save((err, createdUser) => {
         if (err) { return next(err); }
 
         // let the new user be logged in
-        req.logIn(createdUser, (err) => {
+        return req.logIn(createdUser, (err) => {
             if (err) { return next(err); }
 
-            res.json({ user: createdUser });
+            return res.json({ user: createdUser });
         });
     });
 });

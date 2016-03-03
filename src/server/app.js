@@ -49,7 +49,7 @@ export default function render(req, res, next) {
 
     match({ routes, location: req.url }, (err, redirectLocation, renderProps) => {
         if (err) {
-            return next(err);
+            next(err);
             // res.status(500).send(err.message);
         }
         else if (redirectLocation) {
@@ -70,7 +70,7 @@ export default function render(req, res, next) {
             res.send(renderedPage);
         }
         else {
-            return next();
+            next();
         }
     });
 }
