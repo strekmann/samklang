@@ -13,6 +13,7 @@ class ProjectList extends React.Component {
     }
 
     render() {
+        const siteIdentifier = this.props.site.get('identifier');
         return (
             <Grid>
                 <Row>
@@ -24,7 +25,7 @@ class ProjectList extends React.Component {
                         {this.props.projects && this.props.projects.toList().map(
                             project => <div className="project" key={project.get('id')}>
                                 <h3>{project.get('name')}</h3>
-                                <Link to={`/${this.props.site.get('identifier')}/p/${project.get('identifier')}`}>
+                                <Link to={`/${siteIdentifier}/p/${project.get('identifier')}`}>
                                     {project.get('identifier')}
                                 </Link>
                             </div>
