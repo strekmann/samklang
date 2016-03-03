@@ -5,6 +5,7 @@ import user from './user';
 import sites from './sites';
 import site from './site';
 import projects from './projects';
+import project from './project';
 import socket from './socket';
 import routeReducer from './routeReducer';
 
@@ -15,6 +16,7 @@ const reducer = combineReducers({
     sites,
     site,
     projects,
+    project,
     socket,
     routing: routeReducer,
 });

@@ -40,6 +40,7 @@ export function loadSites() {
     });
 }
 
+// not in use: site is added in server middleware
 export function loadSite(payload) {
     return (dispatch) => fetch(`/sites/${payload.identifier}`, {
         method: 'get',

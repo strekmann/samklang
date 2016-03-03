@@ -18,8 +18,8 @@ function loadProjectSuccess(payload) {
     };
 }
 
-export function loadProjects() {
-    return (dispatch) => fetch('/projects', {
+export function loadProjects(site) {
+    return (dispatch) => fetch(`/sites/${site}/projects`, {
         method: 'get',
     })
     .then((data) => {
@@ -33,8 +33,17 @@ export function loadProjects() {
     });
 }
 
-export function createProject(payload) {
-    return (dispatch) => fetch('/projects', {
+export function loadProject(identifier, site) {
+    return (dispatch) => fetch(`/sites/${site}/projects/${identifier}`, {
+        method: 'get',
+    })
+    .then((data) => {
+        dispatch(loadProjectSuccess(Immutable.fromJS(data.project)));
+    });
+}
+
+export function createProject(payload, site) {
+    return (dispatch) => fetch(`/sites/${site}/projects`, {
         method: 'post',
         body: JSON.stringify({ project: payload }),
     })

@@ -1,4 +1,5 @@
 import React from 'react';
+import Immutable from 'immutable';
 import { Grid, Row, Col, Input, Button } from 'react-bootstrap';
 import { connect } from 'react-redux';
 
@@ -17,7 +18,7 @@ class ProjectCreate extends React.Component {
             name: this.refs.name.getValue(),
             end: this.refs.end.getValue(),
         };
-        this.props.dispatch(createProject(project));
+        this.props.dispatch(createProject(project, this.props.site.get('identifier')));
     }
 
     render() {
@@ -41,11 +42,14 @@ class ProjectCreate extends React.Component {
 }
 
 ProjectCreate.propTypes = {
+    site: React.PropTypes.instanceOf(Immutable.Map),
     dispatch: React.PropTypes.func,
 };
 
-function select() {
-    return {};
+function select(state) {
+    return {
+        site: state.get('site'),
+    };
 }
 
 export default connect(select)(ProjectCreate);

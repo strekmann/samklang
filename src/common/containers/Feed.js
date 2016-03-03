@@ -2,22 +2,24 @@ import React from 'react';
 import Immutable from 'immutable';
 import { Grid, Row, Col } from 'react-bootstrap';
 import { connect } from 'react-redux';
+import { Link } from 'react-router';
 
 import { loadSite } from '../actions/sites';
 
 class Feed extends React.Component {
     componentWillMount() {
-        this.props.dispatch(loadSite({ identifier: this.props.params.id }));
+        this.props.dispatch(loadSite({ identifier: this.props.params.siteIdentifier }));
     }
 
     render() {
-        const site = this.props.sites.get(this.props.site.get('id'));
+        const site = this.props.site;//this.props.sites.get(this.props.site.get('id'));
         return (
             <Grid>
                 <Row>
                     <Col xs={12}>
                         <h1>{site && site.get('name')}</h1>
                         <p>FEED</p>
+                        <Link to={`${site.get('identifier')}/projects`}>Projects</Link>
                     </Col>
                 </Row>
             </Grid>

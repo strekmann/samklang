@@ -15,7 +15,7 @@ function createProject(project, user, site) {
     project.creator = user;
     project.site = site;
     project.end = moment(project.end);
-    const _project = new Project(...project); // TODO: use _.pick
+    const _project = new Project(project); // TODO: use _.pick
     return _project.save();
 }
 
@@ -31,7 +31,6 @@ router.route('/')
 })
 .post((req, res, next) => {
     if (req.user) {
-        console.log(req.body, req.user, req.site);
         createProject(req.body.project, req.user.id, req.site.id)
         .then((project) => {
             res.json({ project });
@@ -48,8 +47,8 @@ router.route('/')
 router.route('/:id')
 .get((req, res, next) => {
     getProject(req.params.id, req.site.id)
-    .then((projects) => {
-        res.json({ projects });
+    .then((project) => {
+        res.json({ project });
     })
     .catch(err => {
         next(err);

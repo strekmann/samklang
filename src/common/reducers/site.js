@@ -8,7 +8,8 @@ const initialState = Immutable.fromJS({
 function site(state = initialState, action) {
     switch (action.type) {
         case LOAD_SITE_SUCCESS:
-            return state.set('id', action.payload.get('id'));
+            // site saves complete object, to be compatible with server side middleware
+            return action.payload;
         default:
             return state;
     }

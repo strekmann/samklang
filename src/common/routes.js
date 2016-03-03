@@ -12,6 +12,7 @@ import SiteCreate from './containers/SiteCreate';
 import Feed from './containers/Feed';
 import ProjectList from './containers/ProjectList';
 import ProjectCreate from './containers/ProjectCreate';
+import Project from './containers/Project';
 
 export default (store) => {
     const requireAuth = (nextState, replace, callback) => {
@@ -36,11 +37,12 @@ export default (store) => {
                 <IndexRoute component={SiteList} />
                 <Route path="new" component={SiteCreate} />
             </Route>
-            <Route path=":id">
+            <Route path=":siteIdentifier">
                 <IndexRoute component={Feed} />
                 <Route path="p">
                     <IndexRoute component={ProjectList} />
                     <Route path="new" component={ProjectCreate} />
+                    <Route path=":projectIdentifier" component={Project} />
                 </Route>
             </Route>
         </Route>

@@ -5,7 +5,7 @@ const initialState = Immutable.fromJS({
     id: null,
 });
 
-function site(state = initialState, action) {
+function project(state = initialState, action) {
     switch (action.type) {
         case LOAD_PROJECT_SUCCESS:
             return state.set('id', action.payload.get('id'));
@@ -14,4 +14,4 @@ function site(state = initialState, action) {
     }
 }
 
-export default site;
+export default project;

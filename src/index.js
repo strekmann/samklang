@@ -97,20 +97,26 @@ app.use(passport.session());
 
 app.use((req, res, next) => {
     req.site = {};
-    const match = req.url.match(/^\/(\w{5,})|^\/api\/\d+\/(\w+)/);
+    const match = req.url.match(/^\/(\w{5,})|^\/api\/\d+\/sites\/(\w+)/);
     if (match) {
-        const id = match[1];
-        Site.findOne({ identifier: id }).exec((err, site) => {
-            if (err) { return next(err); }
-            if (site) {
-                req.site = {
-                    id: site._id,
-                    name: site.name,
-                };
-                console.log("SITE", req.site);
-            }
+        const id = match[1] || match[2];
+        if (id !== 'favicon') {
+            log.debug('checking site', id);
+            Site.findOne({ identifier: id }).exec((err, site) => {
+                if (err) { return next(err); }
+                if (site) {
+                    req.site = {
+                        id: site._id,
+                        identifier: site.identifier,
+                        name: site.name,
+                    };
+                }
+                next();
+            });
+        }
+        else {
             next();
-        });
+        }
     }
     else {
         next();
@@ -182,7 +188,7 @@ app.use((req, res, next) => {
 app.use('/api/1/auth', api.auth);
 app.use('/api/1/profile', api.profile);
 app.use('/api/1/sites', api.sites);
-app.use('/api/1/projects', api.projects);
+app.use('/api/1/sites/:site/projects', api.projects);
 
 /** Static stuff **/
 app.use(serveStatic(path.join(__dirname, '..', 'dist', 'public')));
@@ -198,6 +204,9 @@ app.use((req, res, next) => {
         res.store.viewer.id = req.user.id;
         res.store.users = {};
         res.store.users[req.user.id] = JSON.parse(JSON.stringify(req.user));
+    }
+    if (req.site) {
+        res.store.site = req.site;
     }
     next();
 });
@@ -224,23 +233,6 @@ app.get('/profile/:id', (req, res, next) => {
     });
 });
 
-app.get('/', (req, res, next) => {
-    // TODO: Move if check into getSites
-    if (req.user) {
-        siteAPI.getSites(req)
-        .then((sites) => {
-            res.store.sites = sites || {};
-            next();
-        })
-        .catch((err) => {
-            next(err);
-        });
-    }
-    else {
-        res.store.sites = {};
-        next();
-    }
-});
 
 /** Universal app endpoint **/
 app.get('*', universal);
