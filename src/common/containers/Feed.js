@@ -12,14 +12,14 @@ class Feed extends React.Component {
     }
 
     render() {
-        const site = this.props.site;//this.props.sites.get(this.props.site.get('id'));
+        const site = this.props.site;
         return (
             <Grid>
                 <Row>
                     <Col xs={12}>
                         <h1>{site && site.get('name')}</h1>
                         <p>FEED</p>
-                        <Link to={`${site.get('identifier')}/projects`}>Projects</Link>
+                        <Link to={`${site.get('identifier')}/p`}>Projects</Link>
                     </Col>
                 </Row>
             </Grid>

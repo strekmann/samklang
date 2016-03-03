@@ -10,8 +10,10 @@ class App extends React.Component {
             <div>
                 <Navigation
                     viewer={this.props.viewer}
-                    socket={this.props.socket}
+                    site={this.props.site}
                     users={this.props.users}
+                    socket={this.props.socket}
+                    params={this.props.params}
                 />
                 {this.props.children}
                 <Footer id={this.props.viewer.get('id')}/>
@@ -23,13 +25,16 @@ class App extends React.Component {
 App.propTypes = {
     children: React.PropTypes.element,
     viewer: React.PropTypes.object,
-    socket: React.PropTypes.object,
+    site: React.PropTypes.object,
     users: React.PropTypes.object,
+    socket: React.PropTypes.object,
+    params: React.PropTypes.object,
 };
 
 function select(state) {
     return {
         viewer: state.get('viewer'),
+        site: state.get('site'),
         users: state.get('users'),
         socket: state.get('socket'),
     };

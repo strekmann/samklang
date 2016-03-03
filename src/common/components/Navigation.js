@@ -1,4 +1,5 @@
 import React from 'react';
+import Immutable from 'immutable';
 import { Navbar, Nav, NavItem, Label } from 'react-bootstrap';
 import { Link } from 'react-router';
 import { LinkContainer } from 'react-router-bootstrap';
@@ -34,10 +35,16 @@ class Navigation extends React.Component {
             );
         }
 
+        let site = Immutable.fromJS({ name: 'Samklang', identifier: '' });
+        if (this.props.params.siteIdentifier) {
+            site = this.props.site;
+        }
         return (
             <Navbar>
                 <Navbar.Header>
-                    <Navbar.Brand><Link to="/">React-Test</Link></Navbar.Brand>
+                    <Navbar.Brand>
+                        <Link to={`/${site.get('identifier')}`}>{site.get('name')}</Link>
+                    </Navbar.Brand>
                     <Navbar.Toggle />
                 </Navbar.Header>
                 <Navbar.Collapse eventKey={0}>
@@ -54,8 +61,10 @@ class Navigation extends React.Component {
 
 Navigation.propTypes = {
     viewer: React.PropTypes.object,
+    site: React.PropTypes.object,
     users: React.PropTypes.object,
     socket: React.PropTypes.object,
+    params: React.PropTypes.object,
 };
 
 export default Navigation;
