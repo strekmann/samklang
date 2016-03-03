@@ -1,8 +1,6 @@
 import React from 'react';
 import Immutable from 'immutable';
-import { Grid, Row, Col, Button } from 'react-bootstrap';
-import { Link } from 'react-router';
-import { LinkContainer } from 'react-router-bootstrap';
+import { Grid, Row, Col } from 'react-bootstrap';
 import { connect } from 'react-redux';
 
 import { loadProject } from '../actions/projects';
