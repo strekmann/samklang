@@ -23,7 +23,6 @@ import { User, Site } from './server/models';
 import './server/lib/db';
 
 import * as profileAPI from './server/api/profile';
-import * as siteAPI from './server/api/sites';
 
 const app = express();
 const httpServer = http.createServer(app);
