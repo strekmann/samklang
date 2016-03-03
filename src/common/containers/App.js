@@ -16,7 +16,7 @@ class App extends React.Component {
                     params={this.props.params}
                 />
                 {this.props.children}
-                <Footer id={this.props.viewer.get('id')}/>
+                <Footer id={this.props.viewer.get('id')} />
             </div>
         );
     }
