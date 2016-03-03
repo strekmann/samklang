@@ -9,7 +9,10 @@ import { loadProject } from '../actions/projects';
 
 class Project extends React.Component {
     componentWillMount() {
-        this.props.dispatch(loadProject(this.props.params.projectIdentifier, this.props.site.get('identifier')));
+        this.props.dispatch(loadProject(
+            this.props.params.projectIdentifier,
+            this.props.site.get('identifier')
+        ));
     }
 
     render() {

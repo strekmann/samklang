@@ -31,7 +31,12 @@ class ProjectCreate extends React.Component {
                         <form onSubmit={this.onCreate}>
                             <Input type="text" label="Name" ref="name" />
                             <Input type="text" label="Identifier" ref="identifier" />
-                            <Input type="text" label="End date" ref="end" placeholder="1999-12-31" />
+                            <Input
+                                type="text"
+                                label="End date"
+                                ref="end"
+                                placeholder="1999-12-31"
+                            />
                             <Button type="submit" bsStyle="primary">Save</Button>
                         </form>
                     </Col>

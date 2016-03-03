@@ -24,7 +24,9 @@ class SiteList extends React.Component {
                         {this.props.sites.toList().map(
                             site => <div className="site" key={site.get('id')}>
                                 <h3>{site.get('name')}</h3>
-                                <Link to={`/${site.get('identifier')}`}>{site.get('identifier')}</Link>
+                                <Link to={`/${site.get('identifier')}`}>
+                                    {site.get('identifier')}
+                                </Link>
                                 <p>
                                     {site.get('admins').map(user => (
                                         <span key={`${site.get('id')}-${user.get('id')}`}>
