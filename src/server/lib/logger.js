@@ -1,4 +1,5 @@
 /* eslint "no-console": 0 */
+/* eslint "prefer-rest-params": 0 */
 
 import util from 'util';
 import _ from 'lodash';
