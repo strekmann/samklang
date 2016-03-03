@@ -30,13 +30,6 @@ class ProjectList extends React.Component {
                                 <Link to={`/${project.get('identifier')}`}>
                                     {project.get('identifier')}
                                 </Link>
-                                <p>
-                                    {project.get('admins').map(user => (
-                                        <span key={`${project.get('id')}-${user.get('id')}`}>
-                                            {user.get('name')}
-                                        </span>
-                                    ))}
-                                </p>
                             </div>
                         )}
                     </Col>

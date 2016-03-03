@@ -100,7 +100,7 @@ app.use((req, res, next) => {
     const match = req.url.match(/^\/(\w{5,})|^\/api\/\d+\/sites\/(\w+)/);
     if (match) {
         const id = match[1] || match[2];
-        if (id !== 'favicon') {
+        if (id !== 'favicon' && id !== 'undefined') {
             log.debug('checking site', id);
             Site.findOne({ identifier: id }).exec((err, site) => {
                 if (err) { return next(err); }
