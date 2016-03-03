@@ -19,7 +19,7 @@ import api from './server/api';
 import universal from './server/app';
 import socketRoutes from './server/socket';
 import log from './server/lib/logger';
-import { User } from './server/models';
+import { User, Site } from './server/models';
 import './server/lib/db';
 
 import * as profileAPI from './server/api/profile';
@@ -95,6 +95,28 @@ app.use(bodyParser.json());
 app.use(passport.initialize());
 app.use(passport.session());
 
+app.use((req, res, next) => {
+    req.site = {};
+    const match = req.url.match(/^\/(\w{5,})|^\/api\/\d+\/(\w+)/);
+    if (match) {
+        const id = match[1];
+        Site.findOne({ identifier: id }).exec((err, site) => {
+            if (err) { return next(err); }
+            if (site) {
+                req.site = {
+                    id: site._id,
+                    name: site.name,
+                };
+                console.log("SITE", req.site);
+            }
+            next();
+        });
+    }
+    else {
+        next();
+    }
+});
+
 /** Socket.io routes **/
 socketRoutes(io);
 
@@ -160,6 +182,7 @@ app.use((req, res, next) => {
 app.use('/api/1/auth', api.auth);
 app.use('/api/1/profile', api.profile);
 app.use('/api/1/sites', api.sites);
+app.use('/api/1/projects', api.projects);
 
 /** Static stuff **/
 app.use(serveStatic(path.join(__dirname, '..', 'dist', 'public')));

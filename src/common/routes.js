@@ -10,6 +10,8 @@ import Profile from './containers/Profile';
 import SiteList from './containers/SiteList';
 import SiteCreate from './containers/SiteCreate';
 import Feed from './containers/Feed';
+import ProjectList from './containers/ProjectList';
+import ProjectCreate from './containers/ProjectCreate';
 
 export default (store) => {
     const requireAuth = (nextState, replace, callback) => {
@@ -34,7 +36,13 @@ export default (store) => {
                 <IndexRoute component={SiteList} />
                 <Route path="new" component={SiteCreate} />
             </Route>
-            <Route path=":id" component={Feed} />
+            <Route path=":id">
+                <IndexRoute component={Feed} />
+                <Route path="p">
+                    <IndexRoute component={ProjectList} />
+                    <Route path="new" component={ProjectCreate} />
+                </Route>
+            </Route>
         </Route>
     );
 };

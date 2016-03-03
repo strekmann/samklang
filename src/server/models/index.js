@@ -72,10 +72,10 @@ const SiteSchema = new mongoose.Schema({
 });
 
 SiteSchema.set('toJSON', {
+    versionKey: false,
     transform: (document, ret) => {
         ret.id = ret._id;
         delete ret._id;
-        delete ret.__v;
     },
 });
 
