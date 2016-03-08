@@ -14,7 +14,8 @@ import config from 'config';
 import serveStatic from 'serve-static';
 import connectRedis from 'connect-redis';
 
-import passport from './server/lib/passport';
+// import passport from './server/lib/passport';
+import { passport, initializePassport, localPassport } from 'libby';
 import api from './server/api';
 import universal from './server/app';
 import socketRoutes from './server/socket';
@@ -32,6 +33,9 @@ const io = socketIO(httpServer, { path: '/s' });
 if (config.get('express.trust_proxy')) {
     app.enable('trust proxy');
 }
+
+initializePassport(User);
+localPassport();
 
 app.use(cookieParser(config.get('session.cookiesecret')));
 
@@ -77,6 +81,7 @@ const socketOptions = {
     key: config.get('session.name'),
     secret: config.get('session.secret'),
     cookieParser,
+    passport,
     success: (data, accept) => {
         log.debug('successful auth');
         accept();
