@@ -18,7 +18,7 @@ class ProjectList extends React.Component {
             <Grid>
                 <Row>
                     <Col xs={12}>
-                        <LinkContainer to={`/${this.props.params.id}/p/new`}>
+                        <LinkContainer to={`/${this.props.params.siteIdentifier}/p/new`}>
                             <Button>New</Button>
                         </LinkContainer>
                         <h2>{'Projects you administer'}</h2>
