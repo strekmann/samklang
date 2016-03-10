@@ -1,6 +1,7 @@
 import React from 'react';
 import Navigation from '../components/Navigation';
 import Footer from '../components/Footer';
+import Chat from '../containers/Chat';
 import { connect } from 'react-redux';
 
 class App extends React.Component {
@@ -17,6 +18,7 @@ class App extends React.Component {
                 />
                 {this.props.children}
                 <Footer id={this.props.viewer.get('id')} />
+                <Chat />
             </div>
         );
     }

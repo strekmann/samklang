@@ -10,11 +10,16 @@ function socketRoutes(io) {
         io.emit('action', { type: 'SOCKET_SET_USERCOUNT', payload: io.engine.clientsCount });
 
         // when the client emits 'new message', this listens and executes
-        socket.on('new message', (data) => {
+        socket.on('action', (data) => {
+            //console.log("GOT action", data, socket);
             // we tell the client to execute 'new message'
-            socket.broadcast.emit('new message', {
-                name: socket.name,
-                message: data,
+            io.emit('action', {
+                type: 'SOCKET_ADD_MESSAGE',
+                payload: {
+                    data,
+                    name: socket.request.user.name,
+                    message: data.data.message,
+                },
             });
         });
 

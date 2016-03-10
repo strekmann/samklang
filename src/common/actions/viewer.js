@@ -70,3 +70,13 @@ export function registerUser(payload) {
         });
     };
 }
+
+export function sendMessage(payload) {
+    return (dispatch) => fetch('/message', {
+        method: 'post',
+        body: JSON.stringify(payload),
+    })
+    .then((data) => {
+        console.log("message sent");
+    });
+};
