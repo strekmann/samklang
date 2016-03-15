@@ -8,7 +8,10 @@ configureLogger(Object.assign({}, config.get('bunyan'), {
 
 import mongoose from 'mongoose';
 import { connectDB } from 'libby';
-connectDB(mongoose, config);
+connectDB(mongoose, {
+    servers: config.get('mongodb.servers'),
+    replset: config.get('mongodb.replset'),
+});
 
 import { ensureAuthenticated } from 'libby';
 import bodyParser from 'body-parser';
