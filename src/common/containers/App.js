@@ -18,7 +18,7 @@ class App extends React.Component {
                 />
                 {this.props.children}
                 <Footer id={this.props.viewer.get('id')} />
-                <Chat />
+                <Chat id={this.props.viewer.get('id')} />
             </div>
         );
     }
