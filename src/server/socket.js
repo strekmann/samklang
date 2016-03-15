@@ -1,4 +1,4 @@
-import log from './lib/logger';
+import { logger } from 'libby';
 
 let numUsers = 0;
 const names = {};
@@ -6,7 +6,7 @@ const names = {};
 function socketRoutes(io) {
     io.on('connection', socket => {
         let addedUser = false;
-        log.info('socket connected', socket.id, socket.request.user.name);
+        logger.info('socket connected', socket.id, socket.request.user.name);
         io.emit('action', { type: 'SOCKET_SET_USERCOUNT', payload: io.engine.clientsCount });
 
         // when the client emits 'new message', this listens and executes

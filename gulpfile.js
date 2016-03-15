@@ -1,3 +1,4 @@
+var path = require('path');
 var gulp = require("gulp");
 var sass = require("gulp-sass");
 var eslint = require("gulp-eslint");
@@ -18,6 +19,9 @@ var devConfig = {
     ],
     output: {
         filename: "site.js",
+    },
+    resolveLoader: {
+        root: path.join(__dirname, 'node_modules')
     },
     module: {
         loaders: [

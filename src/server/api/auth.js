@@ -1,6 +1,6 @@
 import { Router } from 'express';
 
-import { ensureAuthenticated } from '../lib/middleware';
+import { ensureAuthenticated } from 'libby';
 import { User } from '../models';
 
 const router = new Router();

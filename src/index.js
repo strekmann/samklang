@@ -1,5 +1,16 @@
 #!/usr/bin/env node
 
+import config from 'config';
+import { logger, configureLogger, defaultSerializers } from 'libby';
+configureLogger(Object.assign({}, config.get('bunyan'), {
+    serializers: defaultSerializers,
+}));
+
+import mongoose from 'mongoose';
+import { connectDB } from 'libby';
+connectDB(mongoose, config);
+
+import { ensureAuthenticated } from 'libby';
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 import session from 'express-session';
@@ -10,18 +21,14 @@ import expressBunyan from 'express-bunyan-logger';
 import path from 'path';
 import socketIO from 'socket.io';
 import passportSocketIO from 'passport.socketio';
-import config from 'config';
 import serveStatic from 'serve-static';
 import connectRedis from 'connect-redis';
 
-// import passport from './server/lib/passport';
 import { passport, initializePassport, localPassport } from 'libby';
 import api from './server/api';
 import universal from './server/app';
 import socketRoutes from './server/socket';
-import log from './server/lib/logger';
 import { User, Site } from './server/models';
-import './server/lib/db';
 
 import * as profileAPI from './server/api/profile';
 
@@ -29,6 +36,10 @@ const app = express();
 const httpServer = http.createServer(app);
 const port = config.get('express.port') || 3000;
 const io = socketIO(httpServer, { path: '/s' });
+
+initializePassport(User);
+localPassport();
+
 
 if (config.get('express.trust_proxy')) {
     app.enable('trust proxy');
@@ -41,7 +52,7 @@ app.use(cookieParser(config.get('session.cookiesecret')));
 
 if (config.util.getEnv('NODE_ENV') !== 'test') {
     const bunyanOpts = {
-        logger: log,
+        logger,
         excludes: ['req', 'res', 'req-headers', 'res-headers'],
     };
     app.use(expressBunyan(bunyanOpts));
@@ -83,11 +94,11 @@ const socketOptions = {
     cookieParser,
     passport,
     success: (data, accept) => {
-        log.debug('successful auth');
+        logger.debug('successful auth');
         accept();
     },
     fail: (data, message, error, accept) => {
-        log.debug('auth failed', message);
+        logger.debug('auth failed', message);
         accept(new Error(message));
     },
 };
@@ -99,13 +110,14 @@ app.use(bodyParser.json());
 app.use(passport.initialize());
 app.use(passport.session());
 
+
 app.use((req, res, next) => {
     req.site = {};
     const match = req.url.match(/^\/(\w{5,})|^\/api\/\d+\/sites\/(\w+)/);
     if (match) {
         const id = match[1] || match[2];
         if (id !== 'favicon' && id !== 'undefined') {
-            log.debug('checking site', id);
+            logger.debug('checking site', id);
             Site.findOne({ identifier: id }).exec((err, site) => {
                 if (err) { next(err); }
                 if (site) {
@@ -215,7 +227,7 @@ app.use((req, res, next) => {
     next();
 });
 
-app.get('/profile/:id', (req, res, next) => {
+app.get('/profile/:id', ensureAuthenticated, (req, res, next) => {
     profileAPI.getUser(req)
     .then((user) => {
         if (!user) {
@@ -242,7 +254,7 @@ app.get('/profile/:id', (req, res, next) => {
 app.get('*', universal);
 
 app.use((err, req, res, next) => {
-    log.error(err);
+    logger.error(err);
     res.format({
         html: () => {
             res.sendStatus(500);
@@ -270,10 +282,11 @@ app.use((req, res, next) => {
 });
 
 process.on('uncaughtException', (err) => {
-    log.fatal(err);
+    console.error(err);
+    logger.fatal(err);
     process.exit(1);
 });
 
 httpServer.listen(port, () => {
-    log.info('port %s, env=%s', port, config.util.getEnv('NODE_ENV'));
+    logger.info('port %s, env=%s', port, config.util.getEnv('NODE_ENV'));
 });
